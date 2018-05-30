@@ -23,8 +23,6 @@
 
     public class App : MonoBehaviour {
 
-        protected const string NPCS_JSON_FILENAME = "npcs.json";
-
         public GameObject bkgd = null;
         public GameObject bkgdOverlay = null;
         public GameObject npc = null;
@@ -60,8 +58,7 @@
 
             app = this;
 
-            string filePath = Path.Combine(Application.dataPath, NPCS_JSON_FILENAME);
-            string jsonText = File.ReadAllText(filePath);
+            string jsonText = Resources.Load<TextAsset>("npcs").text;
             npcData = JsonUtility.FromJson<NpcData>(jsonText);
         }
 
@@ -70,7 +67,7 @@
             GameObject go = new GameObject();
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = Resources.Load("blood", typeof(Sprite)) as Sprite;
+            sr.sprite = Resources.Load<Sprite>("blood");
             if (sr.sprite == null) {
                 throw new FileNotFoundException();
             }
