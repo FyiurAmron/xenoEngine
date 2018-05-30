@@ -14,26 +14,26 @@ namespace Vax.Xeno {
             "- npc -"
         };
 
-        protected void Start() {
-            var spriteNames = App.app.npcData.npcProtos.Select(x => x.spriteName);
-            npcNameList.AddRange(spriteNames);
+        protected void Start () {
+            var spriteNames = App.app.npcData.npcProtos.Select( x => x.spriteName );
+            npcNameList.AddRange( spriteNames );
 
             Dropdown dd = gameObject.GetComponent<Dropdown>();
-            dd.AddOptions(npcNameList);
-            dd.onValueChanged.AddListener((val) => onValueChanged(val, dd));
+            dd.AddOptions( npcNameList );
+            dd.onValueChanged.AddListener( ( val ) => onValueChanged( val, dd ) );
         }
 
-        protected void Update() {
+        protected void Update () {
         }
 
-        protected void onValueChanged(int val, Dropdown dd) {
-            if (val == 0) {
+        protected void onValueChanged ( int val, Dropdown dd ) {
+            if ( val == 0 ) {
                 return;
             }
 
-            App app = GameObject.Find("App").GetComponent<App>();
-            if (app.npc != null) {
-                Destroy(app.npc);
+            App app = GameObject.Find( "App" ).GetComponent<App>();
+            if ( app.npc != null ) {
+                Destroy( app.npc );
             }
 
             GameObject go = new GameObject();
@@ -43,8 +43,8 @@ namespace Vax.Xeno {
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
-            sr.sprite = Resources.Load("Npcs/" + dd.captionText.text, typeof(Sprite)) as Sprite;
-            if (sr.sprite == null) {
+            sr.sprite = Resources.Load( "Npcs/" + dd.captionText.text, typeof(Sprite) ) as Sprite;
+            if ( sr.sprite == null ) {
                 throw new FileNotFoundException();
             }
 
@@ -59,13 +59,13 @@ namespace Vax.Xeno {
                 bounds.z / scale.z
             );
 
-            GameObject.Find("DistanceSelector").GetComponent<Dropdown>().value = (int) App.Distance.None;
+            GameObject.Find( "DistanceSelector" ).GetComponent<Dropdown>().value = (int) Distance.None;
 
             app.npc = go;
 
             app.updateNpcScale();
 
-            app.approach();
+            app.initiateMove( MoveDirection.Approach );
         }
 
     }

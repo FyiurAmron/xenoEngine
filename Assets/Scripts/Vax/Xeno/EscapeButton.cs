@@ -5,11 +5,12 @@
 
     public class EscapeButton : MonoBehaviour {
 
-        protected void Start() {
+        protected void Start () {
             Button b = gameObject.GetComponent<Button>();
-            b.onClick.AddListener(() => App.app.escape());
+            b.onClick.AddListener( () =>
+                App.app.initiateMove( MoveDirection.Escape ) );
         }
 
-    }    
+    }
 
 }

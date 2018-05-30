@@ -1,4 +1,6 @@
-﻿namespace Vax.Xeno {
+﻿using System.Collections.Generic;
+
+namespace Vax.Xeno {
 
     using System;
     using System.IO;
@@ -21,7 +23,44 @@
 
     }
 
+    public enum Distance {
+
+        Melee = 0,
+        Near = 1,
+        Medium = 2,
+        Far = 3,
+        None = 4,
+
+    }
+
+    public static class DistanceMethods {
+
+        public static Distance add ( this Distance distance, MoveDirection moveDirection ) {
+            return (Distance) ( (int) distance + (int) moveDirection );
+        }
+
+    }
+
+    public enum State {
+
+        Idle = 0,
+        Move = 1,
+        AttackRanged = 2,
+        AttackMelee = 3,
+
+    }
+
+    public enum MoveDirection {
+
+        Approach = -1,
+        None = 0,
+        Escape = 1,
+
+    }
+
     public class App : MonoBehaviour {
+
+        public static App app; // singleton
 
         public GameObject bkgd = null;
         public GameObject bkgdOverlay = null;
@@ -29,46 +68,50 @@
 
         public NpcData npcData = null;
 
-        public bool wasClicked = false;
+        public const int COUNTER_MAX = 36;
+
         public int attackCounter = 0;
         public int moveCounter = 0;
-        public int moveDirection = 0;
-
-        public const int COUNTER_MAX = 36;
+        public MoveDirection currentMoveDirection = MoveDirection.None;
 
         public Distance distance = Distance.Far;
 
-        public static App app; // singleton
-        public bool distanceTransition = false;
+        public State state = State.Idle;
 
-        public enum Distance {
+        protected readonly Dictionary<State, Action> stateMap;
 
-            Melee = 0,
-            Near = 1,
-            Medium = 2,
-            Far = 3,
-            None = 4,
-
+        public App () {
+            stateMap = new Dictionary<State, Action> {
+                    [State.AttackMelee] = updateAttackMelee,
+                    [State.AttackRanged] = updateAttackRanged,
+                    [State.Move] = updateMove,
+                    [State.Idle] = updateIdle,
+                }
+                ;
         }
 
-        protected void Awake() {
-            if (app != null) {
-                throw new InvalidOperationException("app already initialized");
+        // // //
+
+        // MonoBehaviour implementation
+
+        protected void Awake () {
+            if ( app != null ) {
+                throw new InvalidOperationException( "app already initialized" );
             }
 
             app = this;
 
-            string jsonText = Resources.Load<TextAsset>("npcs").text;
-            npcData = JsonUtility.FromJson<NpcData>(jsonText);
+            string jsonText = Resources.Load<TextAsset>( "npcs" ).text;
+            npcData = JsonUtility.FromJson<NpcData>( jsonText );
         }
 
-        protected void Start() {
+        protected void Start () {
 
             GameObject go = new GameObject();
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = Resources.Load<Sprite>("blood");
-            if (sr.sprite == null) {
+            sr.sprite = Resources.Load<Sprite>( "blood" );
+            if ( sr.sprite == null ) {
                 throw new FileNotFoundException();
             }
 
@@ -92,30 +135,33 @@
             bkgdOverlay = go;
         }
 
-        protected void Update() {
-            updateMove();
-            updateAttack();
+        protected void Update () {
+            stateMap[state]();
         }
 
-        protected void updateMove() {
-            if (moveDirection == 0) {
+        // implementations
+
+        protected void updateIdle () {
+            // nothing currently; put idle animations here later on
+        }
+
+        protected void updateMove () {
+            if ( currentMoveDirection == 0 ) {
                 return;
             }
 
-            if (moveCounter >= COUNTER_MAX) {
-                distance += moveDirection;
-                GameObject.Find("DistanceSelector").GetComponent<Dropdown>().value = (int) distance;
-                if (distance == Distance.None) {
-                    if (app.npc) {
-                        Destroy(app.npc);
-
-                        GameObject.Find("NpcSelector").GetComponent<Dropdown>().value = 0;
+            if ( moveCounter >= COUNTER_MAX ) {
+                distance += (int) currentMoveDirection;
+                GameObject.Find( "DistanceSelector" ).GetComponent<Dropdown>().value = (int) distance;
+                if ( distance == Distance.None ) {
+                    if ( app.npc ) {
+                        Destroy( app.npc );
+                        GameObject.Find( "NpcSelector" ).GetComponent<Dropdown>().value = 0;
                     }
                 }
-
                 moveCounter = 0;
-                moveDirection = 0;
-
+                currentMoveDirection = MoveDirection.None;
+                state = State.Idle;
                 return;
             }
 
@@ -123,22 +169,19 @@
             updateNpcScale();
         }
 
-        protected void updateAttack() {
-            if (!wasClicked) {
+        protected void updateAttackMelee () {
+            if ( attackCounter <= -COUNTER_MAX ) {
+                state = State.Idle;
                 return;
             }
 
-            if (attackCounter <= -COUNTER_MAX) {
-                wasClicked = false;
-            }
-
-            float ratioInv = 1.0f * Math.Abs(attackCounter) / COUNTER_MAX; // 1 -> 0 -> 1
+            float ratioInv = 1.0f * Math.Abs( attackCounter ) / COUNTER_MAX; // 1 -> 0 -> 1
             float ratio = 1.0f - ratioInv; // 0 -> 1 -> 0
 
             Color c;
             SpriteRenderer sr;
 
-            if (bkgd != null) {
+            if ( bkgd != null ) {
                 sr = bkgd.GetComponent<SpriteRenderer>();
                 c = sr.color;
                 c.b = ratioInv;
@@ -146,7 +189,7 @@
                 sr.color = c;
             }
 
-            if (bkgdOverlay != null) {
+            if ( bkgdOverlay != null ) {
                 sr = bkgdOverlay.GetComponent<SpriteRenderer>();
                 c = sr.color;
                 c.a = ratio;
@@ -155,7 +198,7 @@
                 sr.color = c;
             }
 
-            if (npc != null) {
+            if ( npc != null ) {
                 sr = npc.GetComponent<SpriteRenderer>();
                 c = sr.color;
                 c.a = ratioInv;
@@ -163,7 +206,7 @@
                 c.g = ratioInv;
                 sr.color = c;
 
-                updateNpcScale(ratio);
+                updateNpcScale( ratio );
                 Transform t = npc.transform;
                 Vector3 lea = t.localEulerAngles;
                 lea.z = 45.0f * ratio;
@@ -173,39 +216,47 @@
             attackCounter--;
         }
 
-        public bool approach() {
-            if (npc == null || distance == Distance.Melee || distanceTransition) {
-                return false;
-            }
-
-            moveDirection = -1;
-
-            return true;
-        }
-
-        public bool escape() {
-            if (npc == null || distance == Distance.None || distanceTransition) {
-                return false;
-            }
-
-            moveDirection = 1;
-
-            return true;
-        }
-
-        public void npcClick() {
-            if (wasClicked || distance != Distance.Melee) {
+        protected void updateAttackRanged () {
+            if ( attackCounter <= -COUNTER_MAX ) {
+                state = State.Idle;
                 return;
             }
 
-            wasClicked = true;
-            attackCounter = 36;
+            attackCounter--;
         }
 
-        public void updateNpcScale(float ratio = 0) {
-            float scaleFactor = 0.1f * (4.0f + 4.0f * ratio - (int) app.distance -
-                                        (float) moveDirection * moveCounter / COUNTER_MAX);
-            npc.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
+        public bool initiateMove ( MoveDirection moveDirection ) {
+            if ( npc == null || state != State.Idle ) {
+                return false;
+            }
+            Distance requestedDistance = distance.add( moveDirection );
+            if ( requestedDistance > Distance.Far || requestedDistance < Distance.Melee ) {
+                return false;
+            }
+
+            currentMoveDirection = moveDirection;
+
+            state = State.Move;
+
+            return true;
+        }
+
+        public bool npcClick () {
+            if ( state != State.Idle ) {
+                return false;
+            }
+
+            attackCounter = 36;
+
+            state = ( distance == Distance.Melee ) ? State.AttackMelee : State.AttackRanged;
+
+            return true;
+        }
+
+        public void updateNpcScale ( float ratio = 0 ) {
+            float scaleFactor = 0.1f * ( 4.0f + 4.0f * ratio - (int) app.distance -
+                                         (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX );
+            npc.transform.localScale = new Vector3( scaleFactor, scaleFactor, 1 );
         }
 
     }

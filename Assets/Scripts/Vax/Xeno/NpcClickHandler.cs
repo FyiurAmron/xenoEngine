@@ -4,10 +4,10 @@
 
     public class NpcClickHandler : MonoBehaviour {
 
-        protected void OnMouseDown() {
+        protected void OnMouseDown () {
             App.app.npcClick();
         }
 
-    }    
+    }
 
 }

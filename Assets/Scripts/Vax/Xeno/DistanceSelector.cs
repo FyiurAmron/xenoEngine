@@ -7,31 +7,30 @@
 
     public class DistanceSelector : MonoBehaviour {
 
-        public static readonly string[] DISTANCE_NAMES = Enum.GetNames(typeof(App.Distance));
+        public static readonly List<string> DISTANCE_NAMES_LIST = new List<string>(
+            Enum.GetNames( typeof(Distance) ) );
 
-        public static readonly List<string> DISTANCE_NAMES_LIST = new List<string>(DISTANCE_NAMES);
-
-        protected void Start() {
+        protected void Start () {
             Dropdown dd = gameObject.GetComponent<Dropdown>();
-            dd.AddOptions(DISTANCE_NAMES_LIST);
-            dd.onValueChanged.AddListener((val) => onValueChanged(val, dd));
+            dd.AddOptions( DISTANCE_NAMES_LIST );
+            dd.onValueChanged.AddListener( ( val ) => onValueChanged( val, dd ) );
         }
 
-        protected void Update() {
+        protected void Update () {
         }
 
-        protected void onValueChanged(int val, Dropdown dd) {
+        protected void onValueChanged ( int val, Dropdown dd ) {
 
-            App app = GameObject.Find("App").GetComponent<App>();
-            if (app.moveDirection != 0) {
+            App app = GameObject.Find( "App" ).GetComponent<App>();
+            if ( app.currentMoveDirection != 0 ) {
                 gameObject.GetComponent<Dropdown>().value = (int) app.distance;
 
                 return;
             }
 
-            app.distance = (App.Distance) val;
+            app.distance = (Distance) val;
 
-            if (app.npc == null) {
+            if ( app.npc == null ) {
                 return;
             }
 
