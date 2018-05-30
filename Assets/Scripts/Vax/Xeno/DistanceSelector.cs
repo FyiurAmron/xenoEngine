@@ -36,19 +36,9 @@
 
             GameObject npc = app.npc;
 
-            SpriteRenderer sr = npc.GetComponent<SpriteRenderer>();
-            BoxCollider2D bc2D = npc.GetComponent<BoxCollider2D>();
+            app.updateNpcMove();
 
-            Vector3 bounds = sr.bounds.size;
-            Vector3 scale = npc.transform.lossyScale;
-
-            app.updateNpcScale();
-
-            bc2D.size = new Vector3(
-                bounds.x / scale.x,
-                bounds.y / scale.y,
-                bounds.z / scale.z
-            );
+            npc.setBoundsFromSprite();
         }
 
     }

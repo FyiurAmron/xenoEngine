@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Vax.Xeno {
 
@@ -36,34 +35,28 @@ namespace Vax.Xeno {
                 Destroy( app.npc );
             }
 
-            GameObject go = new GameObject();
+            string npcName = dd.captionText.text;
 
-            BoxCollider2D bc2D = go.AddComponent<BoxCollider2D>();
+            GameObject go = new GameObject( npcName );
+            go.AddComponent<BoxCollider2D>();
             go.AddComponent<NpcClickHandler>();
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
-            sr.sprite = Resources.Load( "Npcs/" + dd.captionText.text, typeof(Sprite) ) as Sprite;
+            sr.sprite = Resources.Load( "Npcs/" + npcName, typeof(Sprite) ) as Sprite;
             if ( sr.sprite == null ) {
                 throw new FileNotFoundException();
             }
 
             sr.sortingLayerName = "Npc";
 
-            Vector3 bounds = sr.bounds.size;
-            Vector3 scale = go.transform.lossyScale;
-
-            bc2D.size = new Vector3(
-                bounds.x / scale.x,
-                bounds.y / scale.y,
-                bounds.z / scale.z
-            );
+            go.setBoundsFromSprite();
 
             GameObject.Find( "DistanceSelector" ).GetComponent<Dropdown>().value = (int) Distance.None;
 
             app.npc = go;
 
-            app.updateNpcScale();
+            app.updateNpcMove();
 
             app.initiateMove( MoveDirection.Approach );
         }

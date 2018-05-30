@@ -1,4 +1,6 @@
-﻿namespace Vax.Xeno {
+﻿using System.Linq;
+
+namespace Vax.Xeno {
 
     using System.Collections.Generic;
     using System.IO;
@@ -7,15 +9,16 @@
 
     public class BkgdSelector : MonoBehaviour {
 
-        public static readonly string[] BKGD_NAMES = new string[] {
-            "- bkgd -", "cave", "forest", "mountain", "swamp", "water"
-        }; // TODO move to JSON
-
-        public static readonly List<string> BKGD_NAMES_LIST = new List<string>( BKGD_NAMES );
+        public readonly List<string> bkgdNameList = new List<string> {
+            "- bkgd -"
+        };
 
         protected void Start () {
+            var spriteNames = App.app.bkgdData.bkgdProtos.Select( x => x.spriteName );
+            bkgdNameList.AddRange( spriteNames );
+
             Dropdown dd = gameObject.GetComponent<Dropdown>();
-            dd.AddOptions( BKGD_NAMES_LIST );
+            dd.AddOptions( bkgdNameList );
             dd.onValueChanged.AddListener( ( val ) => onValueChanged( val, dd ) );
         }
 
@@ -32,27 +35,21 @@
                 Destroy( app.bkgd );
             }
 
-            GameObject go = new GameObject();
+            string bkgdName = dd.captionText.text;
+
+            GameObject go = new GameObject( bkgdName );
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
-            sr.sprite = Resources.Load( "Bkgd/" + dd.captionText.text, typeof(Sprite) ) as Sprite;
+            sr.sprite = Resources.Load( "Bkgd/" + bkgdName, typeof(Sprite) ) as Sprite;
             if ( sr.sprite == null ) {
                 throw new FileNotFoundException();
             }
 
             sr.sortingLayerName = "Bkgd";
 
-            Vector3 size = sr.sprite.bounds.size;
-
-            float worldScreenHeight = Camera.main.orthographicSize * 2.0f;
-            float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
-
-            Vector3 scale = go.transform.localScale;
-            scale.x = worldScreenWidth / size.x;
-            scale.y = worldScreenHeight / size.y;
-            go.transform.localScale = scale;
-
+            go.scaleToScreen();
+            
             app.bkgd = go;
         }
 

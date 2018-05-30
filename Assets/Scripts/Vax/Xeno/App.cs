@@ -23,6 +23,22 @@ namespace Vax.Xeno {
 
     }
 
+    [Serializable]
+    public class BkgdProto {
+
+        public string name;
+        public string spriteName;
+        public string fogColor;
+
+    }
+
+    [Serializable]
+    public class BkgdData {
+
+        public BkgdProto[] bkgdProtos;
+
+    }
+
     public enum Distance {
 
         Melee = 0,
@@ -62,11 +78,21 @@ namespace Vax.Xeno {
 
         public static App app; // singleton
 
+        // // //
+
         public GameObject bkgd = null;
         public GameObject bkgdOverlay = null;
+
         public GameObject npc = null;
 
+        public GameObject fog = null;
+
+        // // //
+
         public NpcData npcData = null;
+        public BkgdData bkgdData = null;
+
+        // // //
 
         public const int COUNTER_MAX = 36;
 
@@ -79,6 +105,8 @@ namespace Vax.Xeno {
         public State state = State.Idle;
 
         protected readonly Dictionary<State, Action> stateMap;
+
+        // // //
 
         public App () {
             stateMap = new Dictionary<State, Action> {
@@ -101,38 +129,30 @@ namespace Vax.Xeno {
 
             app = this;
 
-            string jsonText = Resources.Load<TextAsset>( "npcs" ).text;
-            npcData = JsonUtility.FromJson<NpcData>( jsonText );
+            npcData = Utils.loadFromJsonResource<NpcData>( "npcs" );
+            bkgdData = Utils.loadFromJsonResource<BkgdData>( "bkgds" );
         }
 
-        protected void Start () {
-
-            GameObject go = new GameObject();
+        protected GameObject createOverlay ( string resourceName, Color color, string sortingLayerName = "Overlay" ) {
+            GameObject go = new GameObject( resourceName );
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = Resources.Load<Sprite>( "blood" );
+            sr.sprite = Resources.Load<Sprite>( resourceName );
             if ( sr.sprite == null ) {
                 throw new FileNotFoundException();
             }
 
-            Color c = sr.color;
-            c.b = 0;
-            c.g = 0;
-            c.a = 0;
-            sr.color = c;
-            sr.sortingLayerName = "Overlay";
+            sr.color = color;
+            sr.sortingLayerName = sortingLayerName;
 
-            Vector3 size = sr.sprite.bounds.size;
+            go.scaleToScreen();
 
-            float worldScreenHeight = Camera.main.orthographicSize * 2.0f;
-            float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
+            return go;
+        }
 
-            Vector3 scale = go.transform.localScale;
-            scale.x = worldScreenWidth / size.x;
-            scale.y = worldScreenHeight / size.y;
-            go.transform.localScale = scale;
-
-            bkgdOverlay = go;
+        protected void Start () {
+            bkgdOverlay = createOverlay( "blood", new Color( 1.0f, 0.0f, 0.0f, 0.0f ) );
+            fog = createOverlay( "vines", new Color( 1.0f, 1.0f, 1.0f, 1.0f ), "Fog" );
         }
 
         protected void Update () {
@@ -166,7 +186,7 @@ namespace Vax.Xeno {
             }
 
             moveCounter++;
-            updateNpcScale();
+            updateNpcMove();
         }
 
         protected void updateAttackMelee () {
@@ -178,35 +198,18 @@ namespace Vax.Xeno {
             float ratioInv = 1.0f * Math.Abs( attackCounter ) / COUNTER_MAX; // 1 -> 0 -> 1
             float ratio = 1.0f - ratioInv; // 0 -> 1 -> 0
 
-            Color c;
-            SpriteRenderer sr;
-
             if ( bkgd != null ) {
-                sr = bkgd.GetComponent<SpriteRenderer>();
-                c = sr.color;
-                c.b = ratioInv;
-                c.g = ratioInv;
-                sr.color = c;
+                bkgd.setSpriteColor( null, ratioInv, ratioInv ); // go to red
             }
 
             if ( bkgdOverlay != null ) {
-                sr = bkgdOverlay.GetComponent<SpriteRenderer>();
-                c = sr.color;
-                c.a = ratio;
-                c.b = ratioInv;
-                c.g = ratioInv;
-                sr.color = c;
+                bkgdOverlay.setSpriteColor( null, ratioInv, ratioInv, ratioInv ); // go to red
             }
 
             if ( npc != null ) {
-                sr = npc.GetComponent<SpriteRenderer>();
-                c = sr.color;
-                c.a = ratioInv;
-                c.b = ratioInv;
-                c.g = ratioInv;
-                sr.color = c;
+                npc.setSpriteColor( null, ratioInv, ratioInv, ratioInv ); // go to red
 
-                updateNpcScale( ratio );
+                updateNpcMove( ratio );
                 Transform t = npc.transform;
                 Vector3 lea = t.localEulerAngles;
                 lea.z = 45.0f * ratio;
@@ -230,7 +233,7 @@ namespace Vax.Xeno {
                 return false;
             }
             Distance requestedDistance = distance.add( moveDirection );
-            if ( requestedDistance > Distance.Far || requestedDistance < Distance.Melee ) {
+            if ( requestedDistance > Distance.None || requestedDistance < Distance.Melee ) {
                 return false;
             }
 
@@ -253,9 +256,28 @@ namespace Vax.Xeno {
             return true;
         }
 
-        public void updateNpcScale ( float ratio = 0 ) {
-            float scaleFactor = 0.1f * ( 4.0f + 4.0f * ratio - (int) app.distance -
-                                         (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX );
+        public void updateNpcMove ( float ratio = 0 ) {
+            float realDistance = (int) distance +
+                                 (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX;
+
+            fog.setSpriteColor( null, null, null, 0.1f * realDistance );
+
+            fog.setSpriteColor( null, null, null, 0.1f * realDistance );
+
+            fog.scaleToScreen( 5.0f - realDistance );
+
+            float shadowFactorNpc = 1.0f - 0.3f * realDistance;
+            npc.setSpriteColor( shadowFactorNpc, shadowFactorNpc, shadowFactorNpc );
+
+            if ( bkgd != null ) {
+                float shadowFactor = 1.0f - 0.25f * realDistance;
+                if ( shadowFactor < 0.25f ) {
+                    shadowFactor = 0.25f;
+                }
+                bkgd.setSpriteColor( shadowFactor, shadowFactor, shadowFactor );
+            }
+
+            float scaleFactor = 0.2f * ( 4.0f + 4.0f * ratio - realDistance );
             npc.transform.localScale = new Vector3( scaleFactor, scaleFactor, 1 );
         }
 

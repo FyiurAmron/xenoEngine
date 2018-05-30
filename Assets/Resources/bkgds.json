@@ -1,0 +1,29 @@
+﻿{
+    "bkgdProtos": [
+        {
+            "name": "cave",
+            "spriteName": "cave",
+            "fogColor": "#1050C0"
+        },
+        {
+            "name": "forest",
+            "spriteName": "forest",
+            "fogColor": "#1050C0"
+        },
+        {
+            "name": "mountain",
+            "spriteName": "mountain",
+            "fogColor": "#1050C0"
+        },
+        {
+            "name": "swamp",
+            "spriteName": "swamp",
+            "fogColor": "#1050C0"
+        },
+        {
+            "name": "water",
+            "spriteName": "water",
+            "fogColor": "#1050C0"
+        }
+   ]
+}
