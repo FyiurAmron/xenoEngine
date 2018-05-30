@@ -1,4 +1,7 @@
-﻿namespace Vax.Xeno {
+﻿using System;
+using System.Linq;
+
+namespace Vax.Xeno {
 
     using System.Collections.Generic;
     using System.IO;
@@ -7,15 +10,16 @@
 
     public class NpcSelector : MonoBehaviour {
 
-        public static readonly string[] NPC_NAMES = new string[] {
-            "- npc -", "aquan", "bisape", "crusher", "eleboid", "ivy_5"
+        protected readonly List<string> npcNameList = new List<string> {
+            "- npc -"
         };
 
-        public static readonly List<string> NPC_NAMES_LIST = new List<string>(NPC_NAMES);
-
         protected void Start() {
+            var spriteNames = App.app.npcData.npcProtos.Select(x => x.spriteName);
+            npcNameList.AddRange(spriteNames);
+
             Dropdown dd = gameObject.GetComponent<Dropdown>();
-            dd.AddOptions(NPC_NAMES_LIST);
+            dd.AddOptions(npcNameList);
             dd.onValueChanged.AddListener((val) => onValueChanged(val, dd));
         }
 

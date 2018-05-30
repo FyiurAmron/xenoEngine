@@ -5,11 +5,31 @@
     using UnityEngine;
     using UnityEngine.UI;
 
+    [Serializable]
+    public class NpcProto {
+
+        public string name;
+        public string spriteName;
+        public string bloodColor;
+
+    }
+
+    [Serializable]
+    public class NpcData {
+
+        public NpcProto[] npcProtos;
+
+    }
+
     public class App : MonoBehaviour {
+
+        protected const string NPCS_JSON_FILENAME = "npcs.json";
 
         public GameObject bkgd = null;
         public GameObject bkgdOverlay = null;
         public GameObject npc = null;
+
+        public NpcData npcData = null;
 
         public bool wasClicked = false;
         public int attackCounter = 0;
@@ -33,12 +53,19 @@
 
         }
 
-        protected void Start() {
+        protected void Awake() {
             if (app != null) {
                 throw new InvalidOperationException("app already initialized");
             }
 
             app = this;
+
+            string filePath = Path.Combine(Application.dataPath, NPCS_JSON_FILENAME);
+            string jsonText = File.ReadAllText(filePath);
+            npcData = JsonUtility.FromJson<NpcData>(jsonText);
+        }
+
+        protected void Start() {
 
             GameObject go = new GameObject();
 
@@ -180,7 +207,7 @@
 
         public void updateNpcScale(float ratio = 0) {
             float scaleFactor = 0.1f * (4.0f + 4.0f * ratio - (int) app.distance -
-                (float) moveDirection * moveCounter / COUNTER_MAX);
+                                        (float) moveDirection * moveCounter / COUNTER_MAX);
             npc.transform.localScale = new Vector3(scaleFactor, scaleFactor, 1);
         }
 
