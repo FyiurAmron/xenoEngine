@@ -1,24 +1,38 @@
-﻿using UnityEngine;
+﻿using System.Xml.Schema;
+using UnityEngine;
 
 namespace Vax.Xeno {
 
     public static class Utils {
 
+        public static float clamp ( this float f, float min, float max ) {
+            return ( f <= min )
+                ? min
+                : ( f >= max
+                    ? max
+                    : f );
+        }
+
+        public static float clampNorm ( this float f ) {
+            return clamp( f, 0.0f, 1.0f );
+        }
+
+        
         public static void setSpriteColor ( this GameObject gameObject,
             float? red, float? green, float? blue, float? alpha = null ) {
             SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
             Color c = sr.color;
             if ( red != null ) {
-                c.r = red.Value;
+                c.r = clampNorm( red.Value );
             }
             if ( green != null ) {
-                c.g = green.Value;
+                c.g = clampNorm( green.Value );
             }
             if ( blue != null ) {
-                c.b = blue.Value;
+                c.b = clampNorm( blue.Value );
             }
             if ( alpha != null ) {
-                c.a = alpha.Value;
+                c.a = clampNorm( alpha.Value );
             }
             sr.color = c;
         }

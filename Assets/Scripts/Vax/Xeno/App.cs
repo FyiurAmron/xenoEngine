@@ -203,13 +203,15 @@ namespace Vax.Xeno {
             }
 
             if ( bkgdOverlay != null ) {
-                bkgdOverlay.setSpriteColor( null, ratioInv, ratioInv, ratioInv ); // go to red
+                bkgdOverlay.setSpriteColor( null, ratioInv, ratioInv, ratio ); // go to red
             }
 
             if ( npc != null ) {
                 npc.setSpriteColor( null, ratioInv, ratioInv, ratioInv ); // go to red
 
-                updateNpcMove( ratio );
+                float scaleFactor = getNpcScaleFactor( ratio );
+                npc.transform.localScale = new Vector3( scaleFactor, scaleFactor, 1 );
+
                 Transform t = npc.transform;
                 Vector3 lea = t.localEulerAngles;
                 lea.z = 45.0f * ratio;
@@ -256,11 +258,17 @@ namespace Vax.Xeno {
             return true;
         }
 
-        public void updateNpcMove ( float ratio = 0 ) {
-            float realDistance = (int) distance +
-                                 (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX;
+        protected float getRealDistance () {
+            return (int) distance +
+                   (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX;
+        }
 
-            fog.setSpriteColor( null, null, null, 0.1f * realDistance );
+        protected float getNpcScaleFactor ( float ratio ) {
+            return 0.2f * ( 4.0f + 4.0f * ratio - getRealDistance() );
+        }
+
+        public void updateNpcMove ( float ratio = 0 ) {
+            float realDistance = getRealDistance();
 
             fog.setSpriteColor( null, null, null, 0.1f * realDistance );
 
@@ -277,7 +285,7 @@ namespace Vax.Xeno {
                 bkgd.setSpriteColor( shadowFactor, shadowFactor, shadowFactor );
             }
 
-            float scaleFactor = 0.2f * ( 4.0f + 4.0f * ratio - realDistance );
+            float scaleFactor = getNpcScaleFactor( ratio );
             npc.transform.localScale = new Vector3( scaleFactor, scaleFactor, 1 );
         }
 
