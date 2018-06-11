@@ -1,43 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace Vax.Xeno {
+﻿namespace Vax.Xeno {
 
     using System;
     using System.IO;
+    using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.UI;
-
-    [Serializable]
-    public class NpcProto {
-
-        public string name;
-        public string spriteName;
-        public string bloodColor;
-
-    }
-
-    [Serializable]
-    public class NpcData {
-
-        public NpcProto[] npcProtos;
-
-    }
-
-    [Serializable]
-    public class BkgdProto {
-
-        public string name;
-        public string spriteName;
-        public string fogColor;
-
-    }
-
-    [Serializable]
-    public class BkgdData {
-
-        public BkgdProto[] bkgdProtos;
-
-    }
+    using UnityEngine.EventSystems;
 
     public enum Distance {
 
@@ -74,9 +42,18 @@ namespace Vax.Xeno {
 
     }
 
+    public enum ClickContext {
+
+        Npc = 0,
+        Ui = 1,
+
+    }
+
+    // // //
+
     public class App : MonoBehaviour {
 
-        public static App app; // singleton
+        public static App app = null; // singleton
 
         // // //
 
@@ -85,12 +62,18 @@ namespace Vax.Xeno {
 
         public GameObject npc = null;
 
-        public GameObject fog = null;
+        public GameObject bkgdNear = null;
 
         // // //
 
-        public NpcData npcData = null;
-        public BkgdData bkgdData = null;
+        public NpcConfig npcConfig = null;
+        public BkgdConfig bkgdConfig = null;
+        public SfxConfig sfxConfig = null;
+
+        public AudioSource audioSource = null;
+
+        public Dictionary<string, BkgdProto> bkgdMap = null;
+        public Dictionary<string, SfxProto> sfxMap = null;
 
         // // //
 
@@ -104,7 +87,13 @@ namespace Vax.Xeno {
 
         public State state = State.Idle;
 
-        protected readonly Dictionary<State, Action> stateMap;
+        protected readonly Dictionary<State, Action> stateMap = null;
+
+        protected readonly Dictionary<ClickContext, Func<bool>> clickHandlers = null;
+
+        public bool clickHandled = false;
+
+        public readonly List<GameObject> attackDebris = new List<GameObject>();
 
         // // //
 
@@ -114,6 +103,11 @@ namespace Vax.Xeno {
                     [State.AttackRanged] = updateAttackRanged,
                     [State.Move] = updateMove,
                     [State.Idle] = updateIdle,
+                }
+                ;
+            clickHandlers = new Dictionary<ClickContext, Func<bool>> {
+                    [ClickContext.Npc] = clickNpc,
+                    [ClickContext.Ui] = clickUi,
                 }
                 ;
         }
@@ -129,11 +123,15 @@ namespace Vax.Xeno {
 
             app = this;
 
-            npcData = Utils.loadFromJsonResource<NpcData>( "npcs" );
-            bkgdData = Utils.loadFromJsonResource<BkgdData>( "bkgds" );
+            npcConfig = Utils.loadFromJsonResource<NpcConfig>( "npc" );
+            bkgdConfig = Utils.loadFromJsonResource<BkgdConfig>( "bkgd" );
+            sfxConfig = Utils.loadFromJsonResource<SfxConfig>( "sfx" );
+
+            sfxMap = sfxConfig.toSfxMap();
+            bkgdMap = bkgdConfig.toBkgdMap();
         }
 
-        protected GameObject createOverlay ( string resourceName, Color color, string sortingLayerName = "Overlay" ) {
+        public GameObject createOverlay ( string resourceName, Color color, string sortingLayerName = "Overlay" ) {
             GameObject go = new GameObject( resourceName );
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
@@ -151,12 +149,14 @@ namespace Vax.Xeno {
         }
 
         protected void Start () {
+            audioSource = gameObject.AddComponent<AudioSource>();
+
             bkgdOverlay = createOverlay( "blood", new Color( 1.0f, 0.0f, 0.0f, 0.0f ) );
-            fog = createOverlay( "vines", new Color( 1.0f, 1.0f, 1.0f, 1.0f ), "Fog" );
         }
 
         protected void Update () {
             stateMap[state]();
+            clickHandled = false;
         }
 
         // implementations
@@ -223,8 +223,46 @@ namespace Vax.Xeno {
 
         protected void updateAttackRanged () {
             if ( attackCounter <= -COUNTER_MAX ) {
+                foreach ( var v in attackDebris ) {
+                    Destroy( v );
+                }
                 state = State.Idle;
                 return;
+            }
+
+            if ( attackCounter > 0 ) {
+                if ( attackCounter % 10 == 0 ) {
+                    GameObject go = new GameObject();
+                    SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+
+                    sr.sprite = Resources.Load<Sprite>( "splat" );
+                    if ( sr.sprite == null ) {
+                        throw new FileNotFoundException();
+                    }
+                    float splatScaleFactor = UnityEngine.Random.Range( 0.2f, 0.4f ) * getNpcScaleFactor();
+                    Transform t = go.transform;
+                    t.localScale = new Vector3( splatScaleFactor, splatScaleFactor, 1 );
+                    t.position = new Vector3(
+                        UnityEngine.Random.Range( -0.5f, 0.5f ),
+                        UnityEngine.Random.Range( -1.5f, 1.5f ),
+                        1 );
+
+                    Vector3 lea = t.localEulerAngles;
+                    lea.z = UnityEngine.Random.Range( 0.0f, 360.0f );
+                    t.localEulerAngles = lea;
+
+                    go.setSpriteColor( 0.2f, 0.8f, 0.4f, 0.8f );
+
+                    sr.sortingLayerName = "NpcDeco";
+
+                    attackDebris.Add( go );
+                }
+            }
+            if ( attackCounter < 30 && attackCounter >= -1 ) {
+                float ratio = ( attackCounter == -1 ) ? 0 : -0.01f * ( attackCounter % 10 );
+
+                float npcScaleFactor = getNpcScaleFactor( ratio );
+                npc.transform.localScale = new Vector3( npcScaleFactor, npcScaleFactor, 1 );
             }
 
             attackCounter--;
@@ -246,14 +284,37 @@ namespace Vax.Xeno {
             return true;
         }
 
-        public bool npcClick () {
-            if ( state != State.Idle ) {
+        public bool handleClick ( ClickContext clickContext ) {
+            if ( clickHandled ) {
+                return false;
+            }
+
+            clickHandled = clickHandlers[clickContext]();
+            return clickHandled;
+        }
+
+        public bool clickUi () {
+            return true;
+        }
+
+        public bool clickNpc () {
+            if ( state != State.Idle
+                 || EventSystem.current.IsPointerOverGameObject() ) {
+                // 2nd condition is needed since UI is often on touch/mouse up, but other are on touch/mouse down
                 return false;
             }
 
             attackCounter = 36;
 
-            state = ( distance == Distance.Melee ) ? State.AttackMelee : State.AttackRanged;
+            // TODO differentiate weapons/enemy
+
+            if ( distance == Distance.Melee ) {
+                sfxMap["melee"].playOneShot();
+                state = State.AttackMelee;
+            } else {
+                sfxMap["shot"].playOneShot();
+                state = State.AttackRanged;
+            }
 
             return true;
         }
@@ -263,17 +324,25 @@ namespace Vax.Xeno {
                    (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX;
         }
 
-        protected float getNpcScaleFactor ( float ratio ) {
+        protected float getNpcScaleFactor ( float ratio = 0.0f ) {
             return 0.2f * ( 4.0f + 4.0f * ratio - getRealDistance() );
         }
 
-        public void updateNpcMove ( float ratio = 0 ) {
+        public void updateNpcMove ( float ratio = 0.0f ) {
             float realDistance = getRealDistance();
 
-            fog.setSpriteColor( null, null, null, 0.1f * realDistance );
+            if ( bkgdNear != null ) {
+                bkgdNear.setSpriteColor( null, null, null, 0.1f * realDistance );
 
-            fog.scaleToScreen( 5.0f - realDistance );
+                bkgdNear.scaleToScreen( 5.0f - realDistance );
+            }
 
+            if ( bkgd != null ) {
+                //bkgd.setSpriteColor( null, null, null, 0.1f * realDistance );
+
+                bkgd.scaleToScreen( 3.0f - 0.5f * realDistance );
+            }
+            
             float shadowFactorNpc = 1.0f - 0.3f * realDistance;
             npc.setSpriteColor( shadowFactorNpc, shadowFactorNpc, shadowFactorNpc );
 

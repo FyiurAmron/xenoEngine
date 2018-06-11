@@ -5,7 +5,7 @@
     public class NpcClickHandler : MonoBehaviour {
 
         protected void OnMouseDown () {
-            App.app.npcClick();
+            App.app.handleClick( ClickContext.Npc );
         }
 
     }

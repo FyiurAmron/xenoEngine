@@ -1,4 +1,6 @@
 {
-	"dependencies": {
-	}
+    "dependencies": {
+        "com.unity.incrementalcompiler": "0.0.42-preview.1"
+    },
+    "registry": "https://staging-packages.unity.com"
 }

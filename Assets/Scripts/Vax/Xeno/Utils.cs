@@ -1,7 +1,6 @@
-﻿using System.Xml.Schema;
-using UnityEngine;
+﻿namespace Vax.Xeno {
 
-namespace Vax.Xeno {
+    using UnityEngine;
 
     public static class Utils {
 
@@ -17,25 +16,36 @@ namespace Vax.Xeno {
             return clamp( f, 0.0f, 1.0f );
         }
 
-        
-        public static void setSpriteColor ( this GameObject gameObject,
+        public static void setColor ( ref Color color,
             float? red, float? green, float? blue, float? alpha = null ) {
-            SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
-            Color c = sr.color;
             if ( red != null ) {
-                c.r = clampNorm( red.Value );
+                color.r = clampNorm( red.Value );
             }
             if ( green != null ) {
-                c.g = clampNorm( green.Value );
+                color.g = clampNorm( green.Value );
             }
             if ( blue != null ) {
-                c.b = clampNorm( blue.Value );
+                color.b = clampNorm( blue.Value );
             }
             if ( alpha != null ) {
-                c.a = clampNorm( alpha.Value );
+                color.a = clampNorm( alpha.Value );
             }
-            sr.color = c;
         }
+
+        public static void setColor ( this SpriteRenderer spriteRenderer,
+            float? red, float? green, float? blue, float? alpha = null ) {
+
+            Color c = spriteRenderer.color;
+            setColor( ref c, red, green, blue, alpha );
+            spriteRenderer.color = c;
+        }
+
+        public static void setSpriteColor ( this GameObject gameObject,
+            float? red, float? green, float? blue, float? alpha = null ) {
+            
+            gameObject.GetComponent<SpriteRenderer>().setColor( red, green, blue, alpha );
+        }
+
 
         public static void scaleToScreen ( this GameObject gameObject, float scaleFactor = 1.0f ) {
             SpriteRenderer sr = gameObject.GetComponent<SpriteRenderer>();
@@ -58,15 +68,14 @@ namespace Vax.Xeno {
             Vector3 bounds = sr.bounds.size;
             Vector3 scale = gameObject.transform.lossyScale;
 
-            bc2D.size = new Vector3(
+            bc2D.size = new Vector2(
                 bounds.x / scale.x,
-                bounds.y / scale.y,
-                bounds.z / scale.z
+                bounds.y / scale.y
             );
         }
 
-        public static T loadFromJsonResource<T> ( string jsonName ) {
-            string jsonText = Resources.Load<TextAsset>( jsonName ).text;
+        public static T loadFromJsonResource<T> ( string jsonName, string jsonPath = Paths.CONFIG_PATH ) {
+            string jsonText = Resources.Load<TextAsset>( jsonPath + jsonName ).text;
             return JsonUtility.FromJson<T>( jsonText );
         }
 

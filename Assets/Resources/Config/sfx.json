@@ -1,0 +1,14 @@
+﻿{
+    "sfxProtos": [
+        {
+            "name": "melee",
+            "clipName": "melee",
+            "volume": 1.0
+        },
+        {
+            "name": "shot",
+            "clipName": "shot",
+            "volume": 1.0
+        }
+    ]
+}

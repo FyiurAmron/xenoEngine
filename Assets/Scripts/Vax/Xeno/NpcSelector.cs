@@ -14,12 +14,15 @@ namespace Vax.Xeno {
         };
 
         protected void Start () {
-            var spriteNames = App.app.npcData.npcProtos.Select( x => x.spriteName );
+            var spriteNames = App.app.npcConfig.npcProtos.Select( x => x.spriteName );
             npcNameList.AddRange( spriteNames );
 
             Dropdown dd = gameObject.GetComponent<Dropdown>();
             dd.AddOptions( npcNameList );
-            dd.onValueChanged.AddListener( ( val ) => onValueChanged( val, dd ) );
+            dd.onValueChanged.AddListener( ( val ) => {
+                App.app.handleClick( ClickContext.Ui );
+                onValueChanged( val, dd );
+            } );
         }
 
         protected void Update () {
@@ -43,7 +46,7 @@ namespace Vax.Xeno {
 
             SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
-            sr.sprite = Resources.Load( "Npcs/" + npcName, typeof(Sprite) ) as Sprite;
+            sr.sprite = Resources.Load<Sprite>( "Npcs/" + npcName );
             if ( sr.sprite == null ) {
                 throw new FileNotFoundException();
             }
@@ -51,6 +54,10 @@ namespace Vax.Xeno {
             sr.sortingLayerName = "Npc";
 
             go.setBoundsFromSprite();
+
+            Vector2 pos = go.transform.position;
+            pos.y = -1.0f;
+            go.transform.position = pos;
 
             GameObject.Find( "DistanceSelector" ).GetComponent<Dropdown>().value = (int) Distance.None;
 

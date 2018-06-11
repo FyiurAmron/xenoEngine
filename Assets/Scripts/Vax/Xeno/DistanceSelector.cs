@@ -13,7 +13,10 @@
         protected void Start () {
             Dropdown dd = gameObject.GetComponent<Dropdown>();
             dd.AddOptions( DISTANCE_NAMES_LIST );
-            dd.onValueChanged.AddListener( ( val ) => onValueChanged( val, dd ) );
+            dd.onValueChanged.AddListener( ( val ) => {
+                App.app.handleClick( ClickContext.Ui );
+                onValueChanged( val, dd );
+            } );
         }
 
         protected void Update () {
