@@ -1,0 +1,303 @@
+ (0,0): [10-07-2018 06:26:54.220 ] Unity incremental compiler server
+ (0,0): [10-07-2018 06:26:54.271 ] watchdog active on pid: 5052
+ (0,0): [10-07-2018 06:26:56.599 ] Unity.CollabProxy.UI.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:26:56.613 ] Unity.TextMeshPro.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:26:56.613 ] Unity.CollabProxy.UI.dll compiling...
+ (0,0): [10-07-2018 06:26:56.684 ] Unity.TextMeshPro.dll compiling...
+ (0,0): [10-07-2018 06:26:59.824 ] Unity.TextMeshPro.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.TextMeshPro.dll
+ (0,0): [10-07-2018 06:26:59.826 ] Unity.CollabProxy.UI.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.CollabProxy.UI.dll
+ (0,0): [10-07-2018 06:26:59.856 ] Unity.CollabProxy.UI.dll compilation finished in 3243ms  source files re-parsed: 17 metadata reloaded: 88
+ (0,0): [10-07-2018 06:26:59.857 ] Unity.TextMeshPro.dll compilation finished in 3174ms  source files re-parsed: 45 metadata reloaded: 116
+ (0,0): [10-07-2018 06:26:59.866 ] Unity.CollabProxy.UI.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:26:59.867 ] Unity.TextMeshPro.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:27:00.410 ] Unity.Analytics.DataPrivacy.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:27:00.421 ] Unity.Analytics.DataPrivacy.dll compiling...
+ (0,0): [10-07-2018 06:27:00.469 ] Unity.Analytics.DataPrivacy.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.Analytics.DataPrivacy.dll
+ (0,0): [10-07-2018 06:27:00.480 ] Unity.Analytics.DataPrivacy.dll compilation finished in 59ms  source files re-parsed: 3 metadata reloaded: 0
+ (0,0): [10-07-2018 06:27:00.491 ] Unity.Analytics.DataPrivacy.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:27:00.530 ] Unity.CollabProxy.Client.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:27:00.540 ] Unity.CollabProxy.Client.dll compiling...
+ (0,0): [10-07-2018 06:27:00.605 ] Unity.CollabProxy.Client.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.CollabProxy.Client.dll
+ (0,0): [10-07-2018 06:27:00.620 ] Unity.CollabProxy.Client.dll compilation finished in 80ms  source files re-parsed: 11 metadata reloaded: 0
+ (0,0): [10-07-2018 06:27:00.648 ] Unity.CollabProxy.Client.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:27:00.847 ] Unity.PackageManagerUI.Editor.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:27:00.858 ] Unity.PackageManagerUI.Editor.dll compiling...
+ (0,0): [10-07-2018 06:27:01.047 ] Unity.TextMeshPro.Editor.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:27:01.057 ] Unity.TextMeshPro.Editor.dll compiling...
+ (0,0): [10-07-2018 06:27:01.254 ] Unity.PackageManagerUI.Editor.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.PackageManagerUI.Editor.dll
+ (0,0): [10-07-2018 06:27:01.287 ] Unity.PackageManagerUI.Editor.dll compilation finished in 429ms  source files re-parsed: 52 metadata reloaded: 117
+ (0,0): [10-07-2018 06:27:01.318 ] Unity.PackageManagerUI.Editor.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:27:01.454 ] Unity.TextMeshPro.Editor.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.TextMeshPro.Editor.dll
+ (0,0): [10-07-2018 06:27:01.471 ] Unity.TextMeshPro.Editor.dll compilation finished in 414ms  source files re-parsed: 40 metadata reloaded: 1
+ (0,0): [10-07-2018 06:27:01.482 ] Unity.TextMeshPro.Editor.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:27:01.615 ] Unity.Analytics.Android.Editor.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:27:01.626 ] Unity.Analytics.Android.Editor.dll compiling...
+ (0,0): [10-07-2018 06:27:01.644 ] Unity.Analytics.Android.Editor.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.Analytics.Android.Editor.dll
+ (0,0): [10-07-2018 06:27:01.654 ] Unity.Analytics.Android.Editor.dll compilation finished in 28ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 06:27:01.664 ] Unity.Analytics.Android.Editor.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:27:01.924 ] Assembly-CSharp.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:27:01.934 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 06:27:02.051 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 06:27:02.063 ] Assembly-CSharp.dll compilation finished in 129ms  source files re-parsed: 10 metadata reloaded: 6
+ (0,0): [10-07-2018 06:27:02.073 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:28:44.267 ] Unity.CollabProxy.UI.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:28:44.288 ] Unity.CollabProxy.UI.dll compiling...
+ (0,0): [10-07-2018 06:28:44.294 ] Unity.TextMeshPro.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:28:44.304 ] Unity.TextMeshPro.dll compiling...
+ (0,0): [10-07-2018 06:28:44.392 ] Unity.CollabProxy.UI.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.CollabProxy.UI.dll
+ (0,0): [10-07-2018 06:28:44.420 ] Unity.CollabProxy.UI.dll compilation finished in 132ms  source files re-parsed: 17 metadata reloaded: 1
+ (0,0): [10-07-2018 06:28:44.670 ] Unity.CollabProxy.UI.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:28:44.842 ] Unity.TextMeshPro.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.TextMeshPro.dll
+ (0,0): [10-07-2018 06:28:44.855 ] Unity.TextMeshPro.dll compilation finished in 551ms  source files re-parsed: 45 metadata reloaded: 0
+ (0,0): [10-07-2018 06:28:44.872 ] Unity.TextMeshPro.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:28:44.925 ] Unity.Analytics.DataPrivacy.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:28:44.936 ] Unity.Analytics.DataPrivacy.dll compiling...
+ (0,0): [10-07-2018 06:28:44.962 ] Unity.Analytics.DataPrivacy.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.Analytics.DataPrivacy.dll
+ (0,0): [10-07-2018 06:28:44.973 ] Unity.Analytics.DataPrivacy.dll compilation finished in 37ms  source files re-parsed: 3 metadata reloaded: 0
+ (0,0): [10-07-2018 06:28:44.983 ] Unity.Analytics.DataPrivacy.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.100 ] Unity.CollabProxy.Client.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.116 ] Unity.CollabProxy.Client.dll compiling...
+ (0,0): [10-07-2018 06:28:45.152 ] Unity.CollabProxy.Client.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.CollabProxy.Client.dll
+ (0,0): [10-07-2018 06:28:45.169 ] Unity.CollabProxy.Client.dll compilation finished in 52ms  source files re-parsed: 11 metadata reloaded: 0
+ (0,0): [10-07-2018 06:28:45.179 ] Unity.CollabProxy.Client.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.214 ] Unity.PackageManagerUI.Editor.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.224 ] Unity.PackageManagerUI.Editor.dll compiling...
+ (0,0): [10-07-2018 06:28:45.374 ] Unity.PackageManagerUI.Editor.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.PackageManagerUI.Editor.dll
+ (0,0): [10-07-2018 06:28:45.378 ] Unity.TextMeshPro.Editor.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.386 ] Unity.PackageManagerUI.Editor.dll compilation finished in 162ms  source files re-parsed: 52 metadata reloaded: 0
+ (0,0): [10-07-2018 06:28:45.388 ] Unity.TextMeshPro.Editor.dll compiling...
+ (0,0): [10-07-2018 06:28:45.396 ] Unity.PackageManagerUI.Editor.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.637 ] Unity.Analytics.Android.Editor.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.639 ] Unity.TextMeshPro.Editor.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.TextMeshPro.Editor.dll
+ (0,0): [10-07-2018 06:28:45.647 ] Unity.Analytics.Android.Editor.dll compiling...
+ (0,0): [10-07-2018 06:28:45.651 ] Unity.TextMeshPro.Editor.dll compilation finished in 262ms  source files re-parsed: 40 metadata reloaded: 1
+ (0,0): [10-07-2018 06:28:45.661 ] Unity.TextMeshPro.Editor.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.664 ] Unity.Analytics.Android.Editor.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Unity.Analytics.Android.Editor.dll
+ (0,0): [10-07-2018 06:28:45.674 ] Unity.Analytics.Android.Editor.dll compilation finished in 27ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 06:28:45.684 ] Unity.Analytics.Android.Editor.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:28:45.940 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 06:28:46.023 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 06:28:46.035 ] Assembly-CSharp.dll compilation finished in 94ms  source files re-parsed: 0 metadata reloaded: 6
+ (0,0): [10-07-2018 06:28:46.045 ] Assembly-CSharp.dll: compilation was cached, 0 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 06:28:46.055 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 06:32:17.879 ] Compiler cache size is now 19.19 MB
+ (0,0): [10-07-2018 06:59:56.220 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 06:59:56.318 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 06:59:56.329 ] Assembly-CSharp.dll compilation finished in 108ms  source files re-parsed: 2 metadata reloaded: 0
+ (0,0): [10-07-2018 06:59:56.339 ] Assembly-CSharp.dll: compilation was cached, 2 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 06:59:56.349 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 07:09:55.849 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 07:09:55.927 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 07:09:55.937 ] Assembly-CSharp.dll compilation finished in 88ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 07:09:55.947 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 07:09:55.957 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 07:31:06.626 ] Assembly-CSharp.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 07:31:06.636 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 07:31:06.695 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 07:31:06.706 ] Assembly-CSharp.dll compilation finished in 70ms  source files re-parsed: 12 metadata reloaded: 0
+ (0,0): [10-07-2018 07:31:06.716 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 07:59:16.235 ] Assembly-CSharp.dll: no prior compilation found in cache. Caller PID: 5052
+ (0,0): [10-07-2018 07:59:16.245 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 07:59:16.337 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 07:59:16.348 ] Assembly-CSharp.dll compilation finished in 103ms  source files re-parsed: 13 metadata reloaded: 0
+ (0,0): [10-07-2018 07:59:16.358 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:03:10.594 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:03:10.661 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:03:10.677 ] Assembly-CSharp.dll compilation finished in 82ms  source files re-parsed: 2 metadata reloaded: 0
+ (0,0): [10-07-2018 08:03:10.687 ] Assembly-CSharp.dll: compilation was cached, 2 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:03:10.697 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:03:35.420 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:03:35.481 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:03:35.492 ] Assembly-CSharp.dll compilation finished in 72ms  source files re-parsed: 0 metadata reloaded: 0
+ (0,0): [10-07-2018 08:03:35.503 ] Assembly-CSharp.dll: compilation was cached, 0 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:03:35.513 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:09:51.144 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:09:51.207 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:09:51.218 ] Assembly-CSharp.dll compilation finished in 73ms  source files re-parsed: 6 metadata reloaded: 0
+ (0,0): [10-07-2018 08:09:51.228 ] Assembly-CSharp.dll: compilation was cached, 6 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:09:51.238 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:11:26.165 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:11:26.259 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:11:26.269 ] Assembly-CSharp.dll compilation finished in 104ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:11:26.280 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:11:26.290 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:13:59.462 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:13:59.561 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:13:59.588 ] Assembly-CSharp.dll compilation finished in 126ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:13:59.621 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:13:59.631 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:14:46.584 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:14:46.695 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:14:46.706 ] Assembly-CSharp.dll compilation finished in 121ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:14:46.726 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:14:46.749 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:14:50.841 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:14:50.956 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:14:51.016 ] Assembly-CSharp.dll compilation finished in 175ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:14:51.034 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:14:51.059 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:14:58.571 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:14:58.716 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:14:58.739 ] Assembly-CSharp.dll compilation finished in 167ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:14:58.766 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:14:58.779 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:15:06.481 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:15:06.583 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:15:06.603 ] Assembly-CSharp.dll compilation finished in 121ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:15:06.640 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:15:06.658 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:17:04.176 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:17:04.255 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:17:04.266 ] Assembly-CSharp.dll compilation finished in 89ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:17:04.277 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:17:04.287 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:20:46.111 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:20:46.243 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:20:46.261 ] Assembly-CSharp.dll compilation finished in 149ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:20:46.271 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:20:46.281 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:30:31.476 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:30:31.578 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:30:31.589 ] Assembly-CSharp.dll compilation finished in 113ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:30:31.599 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:30:31.609 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:31:42.792 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:31:42.903 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:31:42.929 ] Assembly-CSharp.dll compilation finished in 137ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:31:42.942 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:31:42.969 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:44:07.918 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:44:08.024 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:44:08.037 ] Assembly-CSharp.dll compilation finished in 118ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:44:08.053 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:44:08.069 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:49:15.652 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:49:15.722 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:49:15.732 ] Assembly-CSharp.dll compilation finished in 80ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:49:15.742 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:49:15.752 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:53:01.522 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:53:01.647 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:53:01.673 ] Assembly-CSharp.dll compilation finished in 151ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:53:01.719 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:53:01.742 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:56:05.947 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:56:06.019 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:56:06.030 ] Assembly-CSharp.dll compilation finished in 82ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:56:06.040 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:56:06.050 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 08:57:44.797 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 08:57:44.897 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 08:57:44.914 ] Assembly-CSharp.dll compilation finished in 117ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 08:57:44.925 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 08:57:44.977 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:01:22.807 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:01:22.923 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:01:22.970 ] Assembly-CSharp.dll compilation finished in 162ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:01:23.003 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:01:23.014 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:03:02.030 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:03:02.106 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:03:02.117 ] Assembly-CSharp.dll compilation finished in 87ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:03:02.128 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:03:02.138 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:03:37.513 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:03:37.603 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:03:37.616 ] Assembly-CSharp.dll compilation finished in 102ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:03:37.639 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:03:37.651 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:04:03.420 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:04:03.554 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:04:03.571 ] Assembly-CSharp.dll compilation finished in 150ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:04:03.584 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:04:03.594 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:04:20.578 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:04:20.727 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:04:20.744 ] Assembly-CSharp.dll compilation finished in 166ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:04:20.768 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:04:20.819 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:04:40.365 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:04:40.443 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:04:40.456 ] Assembly-CSharp.dll compilation finished in 90ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:04:40.478 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:04:40.527 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:06:02.463 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:06:02.577 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:06:02.596 ] Assembly-CSharp.dll compilation finished in 133ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:06:02.607 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:06:02.622 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:08:30.379 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:08:30.517 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:08:30.539 ] Assembly-CSharp.dll compilation finished in 159ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:08:30.549 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:08:30.559 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:08:47.846 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:08:47.971 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:08:47.987 ] Assembly-CSharp.dll compilation finished in 141ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:08:48.001 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:08:48.027 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:10:02.822 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:10:02.915 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:10:02.928 ] Assembly-CSharp.dll compilation finished in 106ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:10:02.938 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:10:02.968 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:10:33.894 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:10:34.013 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:10:34.056 ] Assembly-CSharp.dll compilation finished in 161ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:10:34.088 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:10:34.098 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:12:46.368 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:12:46.584 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:12:46.621 ] Assembly-CSharp.dll compilation finished in 253ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:12:46.647 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:12:46.658 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:14:46.840 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:14:46.940 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:14:46.978 ] Assembly-CSharp.dll compilation finished in 137ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:14:46.988 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:14:46.998 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:14:47.600 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:14:47.701 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:14:47.712 ] Assembly-CSharp.dll compilation finished in 111ms  source files re-parsed: 0 metadata reloaded: 0
+ (0,0): [10-07-2018 09:14:47.725 ] Assembly-CSharp.dll: compilation was cached, 0 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:14:47.735 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:16:08.066 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:16:08.195 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:16:08.219 ] Assembly-CSharp.dll compilation finished in 152ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:16:08.229 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:16:08.239 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:40:49.617 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:40:49.690 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:40:49.701 ] Assembly-CSharp.dll compilation finished in 83ms  source files re-parsed: 9 metadata reloaded: 0
+ (0,0): [10-07-2018 09:40:49.711 ] Assembly-CSharp.dll: compilation was cached, 9 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:40:49.721 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:45:33.653 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:45:33.786 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:45:33.797 ] Assembly-CSharp.dll compilation finished in 143ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:45:33.807 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:45:33.817 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:47:12.788 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:47:12.878 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:47:12.890 ] Assembly-CSharp.dll compilation finished in 101ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:47:12.900 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:47:12.910 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:49:17.461 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:49:17.527 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:49:17.538 ] Assembly-CSharp.dll compilation finished in 76ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:49:17.548 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:49:17.558 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:49:30.978 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:49:31.053 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:49:31.065 ] Assembly-CSharp.dll compilation finished in 86ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:49:31.075 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:49:31.085 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:49:47.977 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:49:48.070 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:49:48.090 ] Assembly-CSharp.dll compilation finished in 112ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:49:48.100 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:49:48.110 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052
+ (0,0): [10-07-2018 09:50:02.502 ] Assembly-CSharp.dll compiling...
+ (0,0): [10-07-2018 09:50:02.624 ] Assembly-CSharp.dll: emitting IL to : C:\Codes\_Xeno\UnityEngine\Temp\Assembly-CSharp.dll
+ (0,0): [10-07-2018 09:50:02.636 ] Assembly-CSharp.dll compilation finished in 134ms  source files re-parsed: 1 metadata reloaded: 0
+ (0,0): [10-07-2018 09:50:02.646 ] Assembly-CSharp.dll: compilation was cached, 1 file(s) were found to have changed. Caller PID: 5052
+ (0,0): [10-07-2018 09:50:02.656 ] Assembly-CSharp.dll: session status updated to IncrementalCompilationStatus.Finished for Caller PID: 5052

@@ -1,44 +1,44 @@
 ﻿{
-    "npcProtos": [
-        {
-            "name": "aquan",
-            "spriteName": "aquan",
-            "bloodColor": "#1050C0"
-        },
-        {
-            "name": "bisape",
-            "spriteName": "bisape",
-            "bloodColor": "#1050C0"
-        },
-        {
-            "name": "crusher",
-            "spriteName": "crusher",
-            "bloodColor": "#1050C0"
-        },
-        {
-            "name": "eleboid",
-            "spriteName": "eleboid",
-            "bloodColor": "#1050C0"
-        },
-        {
-            "name": "ivy_5",
-            "spriteName": "ivy_5",
-            "bloodColor": "#1050C0"
-        },
-        {
-            "name": "monoke",
-            "spriteName": "monoke",
-            "bloodColor": "#1050C0"
-        },
-        {
-            "name": "paraboid",
-            "spriteName": "paraboid",
-            "bloodColor": "#1050C0"
-        },
-        {
-            "name": "promite",
-            "spriteName": "promite",
-            "bloodColor": "#1050C0"
-        }
-    ]
+  "npcProtos": {
+    "aquan": {
+      "name": "aquan",
+      "spriteName": "aquan",
+      "bloodColor": "#1050C0"
+    },
+    "bisape": {
+      "name": "bisape",
+      "spriteName": "bisape",
+      "bloodColor": "#FF0000"
+    },
+    "crusher": {
+      "name": "crusher",
+      "spriteName": "crusher",
+      "bloodColor": "#E26D00"
+    },
+    "eleboid": {
+      "name": "eleboid",
+      "spriteName": "eleboid",
+      "bloodColor": "#00FFFF"
+    },
+    "ivy_5": {
+      "name": "ivy_5",
+      "spriteName": "ivy_5",
+      "bloodColor": "#E26D00"
+    },
+    "monoke": {
+      "name": "monoke",
+      "spriteName": "monoke",
+      "bloodColor": "#00FF00"
+    },
+    "paraboid": {
+      "name": "paraboid",
+      "spriteName": "paraboid",
+      "bloodColor": "#008080"
+    },
+    "promite": {
+      "name": "promite",
+      "spriteName": "promite",
+      "bloodColor": "#008000"
+    }
+  }
 }
