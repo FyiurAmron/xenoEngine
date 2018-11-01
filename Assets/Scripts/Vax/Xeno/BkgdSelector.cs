@@ -53,6 +53,8 @@ public class BkgdSelector : MonoBehaviour {
         app.bkgd.createGameObject(
             "Bkgd/" + sprites["3"]
         );
+        
+        app.updateBkgdShadow();
     }
 }
 

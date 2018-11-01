@@ -59,6 +59,8 @@ public class App : MonoBehaviour {
     public const float OVERLAY_UPSCALE_FACTOR = 0.1f;
     public const float ROOT_SCALE_FACTOR = 1.0f; //0.5f;
 
+    public const float SCREEN_SHAKE_AMOUNT = 0.5f;
+
     public NpcEntity npcEntity = null;
 
     // // //
@@ -196,6 +198,8 @@ public class App : MonoBehaviour {
         }
 
         moveCounter++;
+
+        updateBkgdMove();
         updateNpcMove();
     }
 
@@ -239,14 +243,14 @@ public class App : MonoBehaviour {
             state = State.Idle;
             return;
         }
-        
+
         GameObject npcGameObject = npcEntity.gameObject;
         Transform npcTransform = npcGameObject.transform;
 
         if ( attackCounter > 0 ) {
             if ( attackCounter % 10 == 0 ) {
-                mainCameraPosition.x += Random.Range( -1.0f, 1.0f );
-                mainCameraPosition.y += Random.Range( -1.0f, 1.0f );
+                mainCameraPosition.x += Random.Range( -SCREEN_SHAKE_AMOUNT, SCREEN_SHAKE_AMOUNT );
+                mainCameraPosition.y += Random.Range( -SCREEN_SHAKE_AMOUNT, SCREEN_SHAKE_AMOUNT );
 
                 GameObject go = new GameObject();
                 SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
@@ -352,26 +356,32 @@ public class App : MonoBehaviour {
         return 0.2f * ( 4.0f + 4.0f * ratio - getRealDistance() );
     }
 
-    public void updateNpcMove( float ratio = 0.0f ) {
+    public void updateBkgdShadow() {
         float realDistance = getRealDistance();
-
-        //bkgd.setColor( null, null, null, 0.1f * realDistance );
-        bkgd.scaleFactor = 3.0f - 0.5f * realDistance;
-
-        //bkgdOverlayFar.setColor( null, null, null, 0.1f * realDistance );
-        bkgdOverlayFar.scaleFactor = 4.0f - 0.75f * realDistance;
-
-        //bkgdOverlayNear.setColor( null, null, null, 0.1f * realDistance );
-        bkgdOverlayNear.scaleFactor = 5.0f - realDistance;
 
         float shadowFactor = 1.0f - 0.25f * realDistance;
         if ( shadowFactor < 0.25f ) {
             shadowFactor = 0.25f;
         }
 
+        //bkgd.setColor( null, null, null, 0.1f * realDistance );
+        //bkgdOverlayFar.setColor( null, null, null, 0.1f * realDistance );
+        //bkgdOverlayNear.setColor( null, null, null, 0.1f * realDistance );
         bkgd.setColor( shadowFactor, shadowFactor, shadowFactor );
+    }
 
-        // // //
+    public void updateBkgdMove() {
+        float realDistance = getRealDistance();
+
+        bkgd.scaleFactor = 3.0f - 0.5f * realDistance;
+        bkgdOverlayFar.scaleFactor = 4.0f - 0.75f * realDistance;
+        bkgdOverlayNear.scaleFactor = 5.0f - realDistance;
+
+        updateBkgdShadow();
+    }
+
+    public void updateNpcMove( float ratio = 0.0f ) {
+        float realDistance = getRealDistance();
 
         GameObject npcGameObject = npcEntity.gameObject;
 
