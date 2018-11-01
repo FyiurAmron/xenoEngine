@@ -2,7 +2,6 @@
 
 using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,61 +25,34 @@ public class BkgdSelector : MonoBehaviour {
     protected void Update() {
     }
 
-    protected GameObject createBkgd( App app, string bkgdName ) {
-        GameObject go = new GameObject( bkgdName );
-
-        SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
-
-        sr.sprite = Resources.Load( "Bkgd/" + bkgdName, typeof(Sprite) ) as Sprite;
-        if ( sr.sprite == null ) {
-            throw new FileNotFoundException();
-        }
-
-        sr.sortingLayerName = "Bkgd";
-
-        go.scaleToScreen();
-
-        app.bkgd = go;
-
-        return go;
-    }
-
     protected void onValueChanged( int val, Dropdown dd ) {
         if ( val == 0 ) {
             return;
         }
 
-        App app = GameObject.Find( "App" ).GetComponent<App>();
+        App app = App.app;
 
-        if ( app.bkgdOverlayNear != null ) {
-            Destroy( app.bkgdOverlayNear );
-        }
-        if ( app.bkgdOverlayFar != null ) {
-            Destroy( app.bkgdOverlayFar );
-        }
-        if ( app.bkgd != null ) {
-            Destroy( app.bkgd );
-        }
-
-        BkgdProto bkgdName = App.app.bkgdMap[dd.captionText.text];
+        BkgdProto bkgdName = app.bkgdMap[dd.captionText.text];
 
         var sprites = bkgdName.sprites;
-       
+
         if ( sprites.TryGetValue( "1", out var bkgdOverlayNear ) ) {
-            App.app.bkgdOverlayNear = App.app.createOverlay(
+            app.bkgdOverlayNear.createGameObject(
                 "Bkgd/" + bkgdOverlayNear,
-                new Color( 1.0f, 1.0f, 1.0f, 1.0f ),
-                -1, "Fog" );
+                new Color( 1.0f, 1.0f, 1.0f, 1.0f )
+            );
         }
-        
+
         if ( sprites.TryGetValue( "2", out var bkgdOverlayFar ) ) {
-            App.app.bkgdOverlayFar = App.app.createOverlay(
+            app.bkgdOverlayFar.createGameObject(
                 "Bkgd/" + bkgdOverlayFar,
-                new Color( 1.0f, 1.0f, 1.0f, 1.0f ),
-                -2, "Fog" );
+                new Color( 1.0f, 1.0f, 1.0f, 1.0f )
+            );
         }
-        
-        createBkgd( app, sprites["3"] );
+
+        app.bkgd.createGameObject(
+            "Bkgd/" + sprites["3"]
+        );
     }
 }
 

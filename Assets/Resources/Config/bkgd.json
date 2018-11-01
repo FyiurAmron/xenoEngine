@@ -1,6 +1,15 @@
 ﻿{
   "bkgdProtos": [
     {
+      "name": "test",
+      "sprites": {
+        "1": "test-1",
+        "2": "test-2",
+        "3": "test-3"
+      },
+      "fogColor": "#1050C0"
+    },
+    {
       "name": "cave",
       "sprites": {
         "1": "cave-1-1",

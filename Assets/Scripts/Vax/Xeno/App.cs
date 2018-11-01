@@ -1,6 +1,4 @@
-﻿using TMPro;
-
-namespace Vax.Xeno {
+﻿namespace Vax.Xeno {
 
 using System;
 using System.IO;
@@ -9,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Entities;
+using Random = UnityEngine.Random;
 
 public enum Distance {
     Melee = 0,
@@ -20,7 +19,7 @@ public enum Distance {
 
 public static class DistanceMethods {
     public static Distance add( this Distance distance, MoveDirection moveDirection ) {
-        return (Distance) ((int) distance + (int) moveDirection);
+        return (Distance) ( (int) distance + (int) moveDirection );
     }
 }
 
@@ -50,14 +49,17 @@ public class App : MonoBehaviour {
     // // //
 
     public Camera mainCamera = null;
+    public Vector3 mainCameraPosition;
 
-    public GameObject bkgd = null;
-    public GameObject overlay = null;
+    public ViewLayer overlay = null;
+    public ViewLayer bkgd = null;
+    public ViewLayer bkgdOverlayNear = null;
+    public ViewLayer bkgdOverlayFar = null;
+
+    public const float OVERLAY_UPSCALE_FACTOR = 0.1f;
+    public const float ROOT_SCALE_FACTOR = 1.0f; //0.5f;
 
     public NpcEntity npcEntity = null;
-
-    public GameObject bkgdOverlayNear = null;
-    public GameObject bkgdOverlayFar = null;
 
     // // //
 
@@ -94,17 +96,15 @@ public class App : MonoBehaviour {
 
     public App() {
         stateMap = new Dictionary<State, Action> {
-                [State.AttackMelee] = updateAttackMelee,
-                [State.AttackRanged] = updateAttackRanged,
-                [State.Move] = updateMove,
-                [State.Idle] = updateIdle,
-            }
-            ;
+            [State.AttackMelee] = updateAttackMelee,
+            [State.AttackRanged] = updateAttackRanged,
+            [State.Move] = updateMove,
+            [State.Idle] = updateIdle,
+        };
         clickHandlers = new Dictionary<ClickContext, Func<bool>> {
-                [ClickContext.Npc] = clickNpc,
-                [ClickContext.Ui] = clickUi,
-            }
-            ;
+            [ClickContext.Npc] = clickNpc,
+            [ClickContext.Ui] = clickUi,
+        };
     }
 
     // // //
@@ -126,50 +126,45 @@ public class App : MonoBehaviour {
         bkgdMap = bkgdConfig.toBkgdMap();
     }
 
-    public GameObject createOverlay( string resourceName, Color color,
-        int sortingOrder = 0, string sortingLayerName = "Overlay" ) {
-        GameObject localGameObject = new GameObject( resourceName );
-
-        SpriteRenderer spriteRenderer = localGameObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = Resources.Load<Sprite>( resourceName );
-        if ( spriteRenderer.sprite == null ) {
-            throw new FileNotFoundException();
-        }
-
-        spriteRenderer.color = color;
-        spriteRenderer.sortingOrder = sortingOrder;
-        spriteRenderer.sortingLayerName = sortingLayerName;
-
-        localGameObject.scaleToScreen();
-
-        return localGameObject;
-    }
-
     protected void Start() {
         audioSource = gameObject.AddComponent<AudioSource>();
 
         mainCamera = Camera.main;
+        if ( mainCamera == null ) {
+            throw new InvalidOperationException();
+        }
 
-        overlay = createOverlay( "blood", new Color( 1.0f, 0.0f, 0.0f, 0.0f ) );
+        mainCameraPosition = mainCamera.transform.position;
+
+        overlay = new ViewLayer();
+        overlay.createGameObject( "blood", new Color( 1.0f, 0.0f, 0.0f, 0.0f ) );
+        bkgd = new ViewLayer( "Bkgd", 0, ROOT_SCALE_FACTOR );
+        bkgdOverlayFar = new ViewLayer( "Fog", -2, ROOT_SCALE_FACTOR * ( 1.0f + 1.0f * OVERLAY_UPSCALE_FACTOR ) );
+        bkgdOverlayNear = new ViewLayer( "Fog", -1, ROOT_SCALE_FACTOR * ( 1.0f + 2.0f * OVERLAY_UPSCALE_FACTOR ) );
     }
 
     protected void Update() {
-        var mousePos = Input.mousePosition;
+        Vector3 mousePos = Input.mousePosition;
+        float baseSize = mainCamera.orthographicSize
+            * Math.Max( 1.0f, mainCamera.aspect ) * OVERLAY_UPSCALE_FACTOR;
+        float baseX = ( mousePos.x / mainCamera.pixelWidth ).toNormCoord();
+        float baseY = ( mousePos.y / mainCamera.pixelHeight ).toNormCoord();
+        float x = baseX * baseSize;
+        float y = baseY * baseSize;
+        // Debug.Log( $"x={x},y={y}" );
 
-        float x = (mousePos.x / mainCamera.pixelWidth).toCoord();
-        float y = (mousePos.y / mainCamera.pixelHeight).toCoord();
+        bkgd.update();
 
-        //Debug.Log( "("+x+","+y+")" );
-        if ( bkgdOverlayNear != null ) {
-            bkgdOverlayNear.transform.position = new Vector3( x, y, 0 );
-        }
+        bkgdOverlayFar.setPosition( x, y, 0 );
+        bkgdOverlayFar.update();
 
-        if ( bkgdOverlayFar != null ) {
-            bkgdOverlayFar.transform.position = new Vector3( 0.5f * x, 0.5f * y, 0 );
-        }
+        bkgdOverlayNear.setPosition( 2 * x, 2 * y, 0 );
+        bkgdOverlayNear.update();
 
         stateMap[state]();
         clickHandled = false;
+
+        mainCamera.transform.position = mainCameraPosition;
     }
 
     // implementations
@@ -189,6 +184,7 @@ public class App : MonoBehaviour {
             if ( distance == Distance.None ) {
                 if ( app.npcEntity != null ) {
                     app.npcEntity.destroy();
+                    app.npcEntity = null;
                     GameObject.Find( "NpcSelector" ).GetComponent<Dropdown>().value = 0;
                 }
             }
@@ -212,13 +208,8 @@ public class App : MonoBehaviour {
         float ratioInv = 1.0f * Math.Abs( attackCounter ) / COUNTER_MAX; // 1 -> 0 -> 1
         float ratio = 1.0f - ratioInv; // 0 -> 1 -> 0
 
-        if ( bkgd != null ) {
-            bkgd.setSpriteColor( null, ratioInv, ratioInv ); // go to red
-        }
-
-        if ( overlay != null ) {
-            overlay.setSpriteColor( null, ratioInv, ratioInv, ratio ); // go to red
-        }
+        bkgd.setColor( null, ratioInv, ratioInv ); // go to red
+        overlay.setColor( null, ratioInv, ratioInv, ratio ); // go to red
 
         if ( npcEntity != null ) {
             GameObject npc = npcEntity.gameObject;
@@ -238,16 +229,25 @@ public class App : MonoBehaviour {
 
     protected void updateAttackRanged() {
         if ( attackCounter <= -COUNTER_MAX ) {
-            foreach ( var v in attackDebris ) {
+            foreach ( GameObject v in attackDebris ) {
                 Destroy( v );
             }
+
+            mainCameraPosition.x = 0;
+            mainCameraPosition.y = 0;
 
             state = State.Idle;
             return;
         }
+        
+        GameObject npcGameObject = npcEntity.gameObject;
+        Transform npcTransform = npcGameObject.transform;
 
         if ( attackCounter > 0 ) {
             if ( attackCounter % 10 == 0 ) {
+                mainCameraPosition.x += Random.Range( -1.0f, 1.0f );
+                mainCameraPosition.y += Random.Range( -1.0f, 1.0f );
+
                 GameObject go = new GameObject();
                 SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
@@ -256,16 +256,16 @@ public class App : MonoBehaviour {
                     throw new FileNotFoundException();
                 }
 
-                float splatScaleFactor = UnityEngine.Random.Range( 0.2f, 0.4f ) * getNpcScaleFactor();
+                float splatScaleFactor = Random.Range( 0.2f, 0.4f ) * getNpcScaleFactor();
                 Transform t = go.transform;
                 t.localScale = new Vector3( splatScaleFactor, splatScaleFactor, 1 );
                 t.position = new Vector3(
-                    UnityEngine.Random.Range( -0.5f, 0.5f ),
-                    UnityEngine.Random.Range( -1.5f, 1.5f ),
+                    Random.Range( -0.5f, 0.5f ),
+                    Random.Range( -1.5f, 1.5f ),
                     1 );
 
                 Vector3 lea = t.localEulerAngles;
-                lea.z = UnityEngine.Random.Range( 0.0f, 360.0f );
+                lea.z = Random.Range( 0.0f, 360.0f );
                 t.localEulerAngles = lea;
 
                 ColorUtility.TryParseHtmlString( npcEntity.proto.bloodColor, out Color bloodColor );
@@ -278,12 +278,14 @@ public class App : MonoBehaviour {
             }
         }
 
+        mainCameraPosition.x *= 0.9f;
+        mainCameraPosition.y *= 0.9f;
+
         if ( attackCounter < 30 && attackCounter >= -1 ) {
-            float ratio = (attackCounter == -1) ? 0 : -0.01f * (attackCounter % 10);
+            float ratio = ( attackCounter == -1 ) ? 0 : -0.01f * ( attackCounter % 10 );
 
             float npcScaleFactor = getNpcScaleFactor( ratio );
-            GameObject npcGameObject = npcEntity.gameObject;
-            npcGameObject.transform.localScale = new Vector3( npcScaleFactor, npcScaleFactor, 1 );
+            npcTransform.localScale = new Vector3( npcScaleFactor, npcScaleFactor, 1f );
         }
 
         attackCounter--;
@@ -321,7 +323,7 @@ public class App : MonoBehaviour {
 
     public bool clickNpc() {
         if ( state != State.Idle
-             || EventSystem.current.IsPointerOverGameObject() ) {
+            || EventSystem.current.IsPointerOverGameObject() ) {
             // 2nd condition is needed since UI is often on touch/mouse up, but other are on touch/mouse down
             return false;
         }
@@ -343,47 +345,38 @@ public class App : MonoBehaviour {
 
     protected float getRealDistance() {
         return (int) distance +
-               (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX;
+            (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX;
     }
 
     protected float getNpcScaleFactor( float ratio = 0.0f ) {
-        return 0.2f * (4.0f + 4.0f * ratio - getRealDistance());
+        return 0.2f * ( 4.0f + 4.0f * ratio - getRealDistance() );
     }
 
     public void updateNpcMove( float ratio = 0.0f ) {
-        GameObject npcGameObject = npcEntity.gameObject;
-
         float realDistance = getRealDistance();
 
-        if ( bkgd != null ) {
-            //bkgd.setSpriteColor( null, null, null, 0.1f * realDistance );
+        //bkgd.setColor( null, null, null, 0.1f * realDistance );
+        bkgd.scaleFactor = 3.0f - 0.5f * realDistance;
 
-            bkgd.scaleToScreen( 3.0f - 0.5f * realDistance );
+        //bkgdOverlayFar.setColor( null, null, null, 0.1f * realDistance );
+        bkgdOverlayFar.scaleFactor = 4.0f - 0.75f * realDistance;
+
+        //bkgdOverlayNear.setColor( null, null, null, 0.1f * realDistance );
+        bkgdOverlayNear.scaleFactor = 5.0f - realDistance;
+
+        float shadowFactor = 1.0f - 0.25f * realDistance;
+        if ( shadowFactor < 0.25f ) {
+            shadowFactor = 0.25f;
         }
 
-        if ( bkgdOverlayFar != null ) {
-            bkgdOverlayFar.setSpriteColor( null, null, null, 0.1f * realDistance );
+        bkgd.setColor( shadowFactor, shadowFactor, shadowFactor );
 
-            bkgdOverlayFar.scaleToScreen( 4.0f - 0.75f * realDistance );
-        }
+        // // //
 
-        if ( bkgdOverlayNear != null ) {
-            bkgdOverlayNear.setSpriteColor( null, null, null, 0.1f * realDistance );
-
-            bkgdOverlayNear.scaleToScreen( 5.0f - realDistance );
-        }
+        GameObject npcGameObject = npcEntity.gameObject;
 
         float shadowFactorNpc = 1.0f - 0.3f * realDistance;
         npcGameObject.setSpriteColor( shadowFactorNpc, shadowFactorNpc, shadowFactorNpc );
-
-        if ( bkgd != null ) {
-            float shadowFactor = 1.0f - 0.25f * realDistance;
-            if ( shadowFactor < 0.25f ) {
-                shadowFactor = 0.25f;
-            }
-
-            bkgd.setSpriteColor( shadowFactor, shadowFactor, shadowFactor );
-        }
 
         float scaleFactor = getNpcScaleFactor( ratio );
         npcGameObject.transform.localScale = new Vector3( scaleFactor, scaleFactor, 1 );
