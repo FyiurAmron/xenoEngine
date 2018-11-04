@@ -53,3 +53,6 @@ TagManager:
   - name: Overlay
     uniqueID: 1609037517
     locked: 0
+  - name: Shadow
+    uniqueID: 2353606719
+    locked: 0

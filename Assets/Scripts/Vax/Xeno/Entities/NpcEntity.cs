@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 
 namespace Vax.Xeno.Entities {
@@ -6,6 +5,8 @@ namespace Vax.Xeno.Entities {
 using Lib;
 
 public class NpcEntity : Entity<NpcProto> {
+    public const float DEFAULT_Y_POS = -1.5f;
+    
     public NpcEntity( string name, NpcConfig npcConfig ) {
         proto = npcConfig.npcProtos[name];
 
@@ -13,19 +14,17 @@ public class NpcEntity : Entity<NpcProto> {
         gameObject.AddComponent<BoxCollider2D>();
         gameObject.AddComponent<NpcClickHandler>();
 
-        SpriteRenderer sr = gameObject.AddComponent<SpriteRenderer>();
+        SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
 
-        sr.sprite = Resources.Load<Sprite>( "Npcs/" + name );
-        if ( sr.sprite == null ) {
-            throw new FileNotFoundException();
-        }
+        spriteRenderer.sprite = Utils.loadResource<Sprite>( "Npcs/" + name );
 
-        sr.sortingLayerName = "Npc";
-
+        spriteRenderer.sortingLayerName = "Npc";
+        spriteRenderer.material = new Material( Utils.DEFAULT_SPRITE_SHADER );
+        
         gameObject.setBoundsFromSprite();
 
-        Vector2 pos = gameObject.transform.position;
-        pos.y = -1.0f;
+        Vector3 pos = gameObject.transform.position;
+        pos.y = DEFAULT_Y_POS;
         gameObject.transform.position = pos;
     }
 

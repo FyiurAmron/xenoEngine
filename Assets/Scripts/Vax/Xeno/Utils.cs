@@ -4,9 +4,12 @@ using SmallJson;
 namespace Vax.Xeno {
 
 using System;
+using System.IO;
 using UnityEngine;
 
 public static class Utils {
+    public static readonly Shader DEFAULT_SPRITE_SHADER = Shader.Find( "Sprites/Diffuse" );
+    
     public static float clamp( this float f, float min, float max ) {
         return ( f <= min )
             ? min
@@ -94,8 +97,18 @@ public static class Utils {
     }
 
     public static T loadFromJsonResource<T>( string jsonName, string jsonPath = Paths.CONFIG_PATH ) {
-        string jsonText = Resources.Load<TextAsset>( jsonPath + jsonName ).text;
+        string jsonText = loadResource<TextAsset>( jsonPath + jsonName ).text;
         return Json.parse<T>( jsonText );
+    }
+
+    public static T loadResource<T>( string resourceName ) where T : UnityEngine.Object {
+        T resource = Resources.Load<T>( resourceName );
+
+        if ( resource == null ) {
+            throw new FileNotFoundException();
+        }
+
+        return resource;
     }
 }
 

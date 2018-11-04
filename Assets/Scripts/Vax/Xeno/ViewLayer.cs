@@ -1,9 +1,8 @@
-using System.IO;
 using UnityEngine;
 
 namespace Vax.Xeno {
 
-public class ViewLayer {
+public class ViewLayer {   
     protected readonly int sortingOrder;
     protected readonly string sortingLayerName;
     protected readonly float baseScaleFactor;
@@ -21,14 +20,11 @@ public class ViewLayer {
         this.baseScaleFactor = baseScaleFactor;
     }
 
-    public ViewLayer createGameObject( string resourceName, Color? color = null ) {
+    public ViewLayer setTo( GameObject newGameObject, Sprite newSprite, Color? color = null ) {
         destroy(); // cleanup old state
 
-        gameObject = new GameObject( resourceName );
-        sprite = Resources.Load<Sprite>( resourceName );
-        if ( sprite == null ) {
-            throw new FileNotFoundException();
-        }
+        gameObject = newGameObject;
+        sprite = newSprite;
 
         spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprite;
@@ -38,12 +34,21 @@ public class ViewLayer {
 
         spriteRenderer.sortingOrder = sortingOrder;
         spriteRenderer.sortingLayerName = sortingLayerName;
+        spriteRenderer.material = new Material( Utils.DEFAULT_SPRITE_SHADER );
 
         active = true;
 
         update();
-       
+
         return this;
+    }
+
+    public ViewLayer createGameObject( string resourceName, Color? color = null ) {
+        return setTo(
+            new GameObject( resourceName ),
+            Utils.loadResource<Sprite>( resourceName ),
+            color
+        );
     }
 
     public ViewLayer setColor( Color color ) {
@@ -73,7 +78,7 @@ public class ViewLayer {
 
         gameObject.scaleToScreen( baseScaleFactor * scaleFactor );
 
-        return this;       
+        return this;
     }
 
     public ViewLayer setPosition( float x, float y, float z ) {

@@ -62,7 +62,7 @@ public class SfxConfig {
     public Dictionary<string, SfxProto> toSfxMap() {
         var dictionary = new Dictionary<string, SfxProto>();
         foreach ( SfxProto v in sfxProtos ) {
-            v.audioClip = Resources.Load<AudioClip>( Paths.SFX_PATH + v.clipName );
+            v.audioClip = Utils.loadResource<AudioClip>( Paths.SFX_PATH + v.clipName );
             dictionary[v.name] = v;
         }
 

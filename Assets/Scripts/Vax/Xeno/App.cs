@@ -1,7 +1,6 @@
 ﻿namespace Vax.Xeno {
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +17,20 @@ public enum Distance {
 }
 
 public static class DistanceMethods {
+    public static readonly Dictionary<Distance, float> DISTANCE_MAP = new Dictionary<Distance, float> {
+        [Distance.Melee] = 0.0f,
+        [Distance.Near] = 0.3f,
+        [Distance.Medium] = 0.7f,
+        [Distance.Far] = 0.85f,
+        [Distance.None] = 1.0f,
+    };
+
     public static Distance add( this Distance distance, MoveDirection moveDirection ) {
         return (Distance) ( (int) distance + (int) moveDirection );
+    }
+
+    public static float getFactor( this Distance distance ) {
+        return DISTANCE_MAP[distance];
     }
 }
 
@@ -56,6 +67,9 @@ public class App : MonoBehaviour {
     public ViewLayer bkgdOverlayNear = null;
     public ViewLayer bkgdOverlayFar = null;
 
+    public FlashLight flashLight = null;
+    public Color ambientLight;
+
     public const float OVERLAY_UPSCALE_FACTOR = 0.1f;
     public const float ROOT_SCALE_FACTOR = 1.0f; //0.5f;
 
@@ -78,6 +92,7 @@ public class App : MonoBehaviour {
 
     public const int COUNTER_MAX = 36;
 
+    public int mainCounter;
     public int attackCounter = 0;
     public int moveCounter = 0;
     public MoveDirection currentMoveDirection = MoveDirection.None;
@@ -126,6 +141,8 @@ public class App : MonoBehaviour {
 
         sfxMap = sfxConfig.toSfxMap();
         bkgdMap = bkgdConfig.toBkgdMap();
+
+        ambientLight = new Color( 24f / 256, 24f / 256, 24f / 256 );
     }
 
     protected void Start() {
@@ -143,30 +160,40 @@ public class App : MonoBehaviour {
         bkgd = new ViewLayer( "Bkgd", 0, ROOT_SCALE_FACTOR );
         bkgdOverlayFar = new ViewLayer( "Fog", -2, ROOT_SCALE_FACTOR * ( 1.0f + 1.0f * OVERLAY_UPSCALE_FACTOR ) );
         bkgdOverlayNear = new ViewLayer( "Fog", -1, ROOT_SCALE_FACTOR * ( 1.0f + 2.0f * OVERLAY_UPSCALE_FACTOR ) );
+
+        flashLight = new FlashLight();
+
+        mainCounter = 0;
     }
 
     protected void Update() {
+        stateMap[state](); // process current state
+
+        RenderSettings.ambientLight = ambientLight;
+
+        float baseSize = mainCamera.orthographicSize * Math.Max( 1.0f, mainCamera.aspect );
+
         Vector3 mousePos = Input.mousePosition;
-        float baseSize = mainCamera.orthographicSize
-            * Math.Max( 1.0f, mainCamera.aspect ) * OVERLAY_UPSCALE_FACTOR;
-        float baseX = ( mousePos.x / mainCamera.pixelWidth ).toNormCoord();
-        float baseY = ( mousePos.y / mainCamera.pixelHeight ).toNormCoord();
-        float x = baseX * baseSize;
-        float y = baseY * baseSize;
-        // Debug.Log( $"x={x},y={y}" );
+        float baseX = ( mousePos.x / mainCamera.pixelWidth ).toNormCoord() * baseSize;
+        float baseY = ( mousePos.y / mainCamera.pixelHeight ).toNormCoord() * baseSize;
+        float overlayX = baseX * OVERLAY_UPSCALE_FACTOR;
+        float overlayY = baseY * OVERLAY_UPSCALE_FACTOR;
 
         bkgd.update();
 
-        bkgdOverlayFar.setPosition( x, y, 0 );
+        bkgdOverlayFar.setPosition( overlayX, overlayY, 0 );
         bkgdOverlayFar.update();
 
-        bkgdOverlayNear.setPosition( 2 * x, 2 * y, 0 );
+        bkgdOverlayNear.setPosition( 2 * overlayX, 2 * overlayY, 0 );
         bkgdOverlayNear.update();
 
-        stateMap[state]();
+        flashLight.setPosition( baseX, baseY );
+
         clickHandled = false;
 
         mainCamera.transform.position = mainCameraPosition;
+
+        mainCounter++;
     }
 
     // implementations
@@ -201,6 +228,9 @@ public class App : MonoBehaviour {
 
         updateBkgdMove();
         updateNpcMove();
+
+        float newLightZ = -getNpcDistanceFactor() * flashLight.range - FlashLight.MINIMUM_DISTANCE;
+        flashLight.setPosition( null, null, newLightZ );
     }
 
     protected void updateAttackMelee() {
@@ -255,10 +285,7 @@ public class App : MonoBehaviour {
                 GameObject go = new GameObject();
                 SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
-                sr.sprite = Resources.Load<Sprite>( "splat" );
-                if ( sr.sprite == null ) {
-                    throw new FileNotFoundException();
-                }
+                sr.sprite = Utils.loadResource<Sprite>( "splat" );
 
                 float splatScaleFactor = Random.Range( 0.2f, 0.4f ) * getNpcScaleFactor();
                 Transform t = go.transform;
@@ -347,47 +374,35 @@ public class App : MonoBehaviour {
         return true;
     }
 
-    protected float getRealDistance() {
+    protected float getNpcDistanceFactor() {
+        float ratio = 1.0f * moveCounter / COUNTER_MAX;
+        float curDist = distance.getFactor();
+        float targetDist = distance.add( currentMoveDirection ).getFactor();
+
+        float result = curDist * ( 1.0f - ratio ) + targetDist * ratio;
+
+        return result;
+    }
+
+    protected float getBkgdDistance() {
         return (int) distance +
             (int) currentMoveDirection * 1.0f * moveCounter / COUNTER_MAX;
     }
 
     protected float getNpcScaleFactor( float ratio = 0.0f ) {
-        return 0.2f * ( 4.0f + 4.0f * ratio - getRealDistance() );
-    }
-
-    public void updateBkgdShadow() {
-        float realDistance = getRealDistance();
-
-        float shadowFactor = 1.0f - 0.25f * realDistance;
-        if ( shadowFactor < 0.25f ) {
-            shadowFactor = 0.25f;
-        }
-
-        //bkgd.setColor( null, null, null, 0.1f * realDistance );
-        //bkgdOverlayFar.setColor( null, null, null, 0.1f * realDistance );
-        //bkgdOverlayNear.setColor( null, null, null, 0.1f * realDistance );
-        bkgd.setColor( shadowFactor, shadowFactor, shadowFactor );
+        return 0.8f * ( 1.0f + 1.0f * ratio - getNpcDistanceFactor() );
     }
 
     public void updateBkgdMove() {
-        float realDistance = getRealDistance();
+        float dist = getBkgdDistance();
 
-        bkgd.scaleFactor = 3.0f - 0.5f * realDistance;
-        bkgdOverlayFar.scaleFactor = 4.0f - 0.75f * realDistance;
-        bkgdOverlayNear.scaleFactor = 5.0f - realDistance;
-
-        updateBkgdShadow();
+        bkgd.scaleFactor = 3.0f - 0.5f * dist;
+        bkgdOverlayFar.scaleFactor = 4.0f - 0.75f * dist;
+        bkgdOverlayNear.scaleFactor = 5.0f - dist;
     }
 
     public void updateNpcMove( float ratio = 0.0f ) {
-        float realDistance = getRealDistance();
-
         GameObject npcGameObject = npcEntity.gameObject;
-
-        float shadowFactorNpc = 1.0f - 0.3f * realDistance;
-        npcGameObject.setSpriteColor( shadowFactorNpc, shadowFactorNpc, shadowFactorNpc );
-
         float scaleFactor = getNpcScaleFactor( ratio );
         npcGameObject.transform.localScale = new Vector3( scaleFactor, scaleFactor, 1 );
     }
