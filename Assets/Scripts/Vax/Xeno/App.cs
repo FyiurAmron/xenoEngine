@@ -67,7 +67,8 @@ public class App : MonoBehaviour {
     public ViewLayer bkgdOverlayNear = null;
     public ViewLayer bkgdOverlayFar = null;
 
-    public FlashLight flashLight = null;
+    public TorchLight torchLight = null;
+    public GunLight gunLight = null;
     public Color ambientLight;
 
     public const float OVERLAY_UPSCALE_FACTOR = 0.1f;
@@ -161,7 +162,8 @@ public class App : MonoBehaviour {
         bkgdOverlayFar = new ViewLayer( "Fog", -2, ROOT_SCALE_FACTOR * ( 1.0f + 1.0f * OVERLAY_UPSCALE_FACTOR ) );
         bkgdOverlayNear = new ViewLayer( "Fog", -1, ROOT_SCALE_FACTOR * ( 1.0f + 2.0f * OVERLAY_UPSCALE_FACTOR ) );
 
-        flashLight = new FlashLight();
+        torchLight = new TorchLight();
+        gunLight = new GunLight();
 
         mainCounter = 0;
     }
@@ -187,7 +189,7 @@ public class App : MonoBehaviour {
         bkgdOverlayNear.setPosition( 2 * overlayX, 2 * overlayY, 0 );
         bkgdOverlayNear.update();
 
-        flashLight.setPosition( baseX, baseY );
+        torchLight.setPosition( baseX, baseY );
 
         clickHandled = false;
 
@@ -229,8 +231,9 @@ public class App : MonoBehaviour {
         updateBkgdMove();
         updateNpcMove();
 
-        float newLightZ = -getNpcDistanceFactor() * flashLight.range - FlashLight.MINIMUM_DISTANCE;
-        flashLight.setPosition( null, null, newLightZ );
+        float newLightZ = -getNpcDistanceFactor() * torchLight.range - TorchLight.MINIMUM_DISTANCE;
+        torchLight.setPosition( null, null, newLightZ );
+        gunLight.setPosition( null, null, newLightZ );
     }
 
     protected void updateAttackMelee() {
@@ -269,6 +272,8 @@ public class App : MonoBehaviour {
 
             mainCameraPosition.x = 0;
             mainCameraPosition.y = 0;
+            
+            gunLight.enabled = false; // safety measure
 
             state = State.Idle;
             return;
@@ -278,35 +283,45 @@ public class App : MonoBehaviour {
         Transform npcTransform = npcGameObject.transform;
 
         if ( attackCounter > 0 ) {
-            if ( attackCounter % 10 == 0 ) {
-                mainCameraPosition.x += Random.Range( -SCREEN_SHAKE_AMOUNT, SCREEN_SHAKE_AMOUNT );
-                mainCameraPosition.y += Random.Range( -SCREEN_SHAKE_AMOUNT, SCREEN_SHAKE_AMOUNT );
+            switch ( attackCounter % 10 ) {
+                case 0: {
+                    mainCameraPosition.x += Random.Range( -SCREEN_SHAKE_AMOUNT, SCREEN_SHAKE_AMOUNT );
+                    mainCameraPosition.y += Random.Range( -SCREEN_SHAKE_AMOUNT, SCREEN_SHAKE_AMOUNT );
 
-                GameObject go = new GameObject();
-                SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
+                    GameObject go = new GameObject();
+                    SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
-                sr.sprite = Utils.loadResource<Sprite>( "splat" );
+                    sr.sprite = Utils.loadResource<Sprite>( "splat" );
 
-                float splatScaleFactor = Random.Range( 0.2f, 0.4f ) * getNpcScaleFactor();
-                Transform t = go.transform;
-                t.localScale = new Vector3( splatScaleFactor, splatScaleFactor, 1 );
-                t.position = new Vector3(
-                    Random.Range( -0.5f, 0.5f ),
-                    Random.Range( -1.5f, 1.5f ),
-                    1 );
+                    float splatScaleFactor = Random.Range( 0.2f, 0.4f ) * getNpcScaleFactor();
+                    Transform t = go.transform;
+                    t.localScale = new Vector3( splatScaleFactor, splatScaleFactor, 1 );
+                    t.position = new Vector3(
+                        Random.Range( -0.5f, 0.5f ),
+                        Random.Range( -1.5f, 1.5f ),
+                        1 );
 
-                Vector3 lea = t.localEulerAngles;
-                lea.z = Random.Range( 0.0f, 360.0f );
-                t.localEulerAngles = lea;
+                    Vector3 lea = t.localEulerAngles;
+                    lea.z = Random.Range( 0.0f, 360.0f );
+                    t.localEulerAngles = lea;
 
-                ColorUtility.TryParseHtmlString( npcEntity.proto.bloodColor, out Color bloodColor );
-                bloodColor.a = 1.0f;
-                go.setSpriteColor( bloodColor );
+                    ColorUtility.TryParseHtmlString( npcEntity.proto.bloodColor, out Color bloodColor );
+                    bloodColor.a = 1.0f;
+                    go.setSpriteColor( bloodColor );
 
-                sr.sortingLayerName = "NpcDeco";
+                    sr.sortingLayerName = "NpcDeco";
 
-                attackDebris.Add( go );
+                    attackDebris.Add( go );
+
+                    gunLight.enabled = true;
+                    break;
+                }
+                case 5:
+                    gunLight.enabled = false;
+                    break;
             }
+        } else {
+            gunLight.enabled = false;
         }
 
         mainCameraPosition.x *= 0.9f;

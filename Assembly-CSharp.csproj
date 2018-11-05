@@ -63,8 +63,9 @@
     <Compile Include="Assets\Scripts\Vax\Xeno\Entities\NpcClickHandler.cs" />
     <Compile Include="Assets\Scripts\Vax\Xeno\Entities\NpcEntity.cs" />
     <Compile Include="Assets\Scripts\Vax\Xeno\Entities\NpcProto.cs" />
-    <Compile Include="Assets\Scripts\Vax\Xeno\FlashLight.cs" />
+    <Compile Include="Assets\Scripts\Vax\Xeno\GunLight.cs" />
     <Compile Include="Assets\Scripts\Vax\Xeno\Paths.cs" />
+    <Compile Include="Assets\Scripts\Vax\Xeno\TorchLight.cs" />
     <Compile Include="Assets\Scripts\Vax\Xeno\Ui\AmbientColorScrollbar.cs" />
     <Compile Include="Assets\Scripts\Vax\Xeno\Ui\ApproachButton.cs" />
     <Compile Include="Assets\Scripts\Vax\Xeno\Ui\BkgdSelector.cs" />
