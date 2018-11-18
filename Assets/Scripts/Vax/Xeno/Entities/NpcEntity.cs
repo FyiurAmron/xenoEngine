@@ -5,7 +5,7 @@ namespace Vax.Xeno.Entities {
 using Lib;
 
 public class NpcEntity : Entity<NpcProto> {
-    public const float DEFAULT_Y_POS = -1.5f;
+    public const float DEFAULT_Y_POS = -0.5f;
     
     public NpcEntity( string name, NpcConfig npcConfig ) {
         proto = npcConfig.npcProtos[name];
@@ -16,7 +16,7 @@ public class NpcEntity : Entity<NpcProto> {
 
         SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
 
-        spriteRenderer.sprite = Utils.loadResource<Sprite>( "Npcs/" + name );
+        spriteRenderer.sprite = Utils.loadResource<Sprite>( Paths.NPC_PATH + name );
 
         spriteRenderer.sortingLayerName = "Npc";
         spriteRenderer.material = new Material( Utils.DEFAULT_SPRITE_SHADER );

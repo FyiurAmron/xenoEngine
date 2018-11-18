@@ -9,7 +9,7 @@ using UnityEngine;
 
 public static class Utils {
     public static readonly Shader DEFAULT_SPRITE_SHADER = Shader.Find( "Sprites/Diffuse" );
-    
+
     public static float clamp( this float f, float min, float max ) {
         return ( f <= min )
             ? min
@@ -105,7 +105,7 @@ public static class Utils {
         T resource = Resources.Load<T>( resourceName );
 
         if ( resource == null ) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException( "File not found:" + resourceName, resourceName );
         }
 
         return resource;

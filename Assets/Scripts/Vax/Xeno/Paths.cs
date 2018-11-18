@@ -9,6 +9,10 @@ using UnityEngine;
 public static class Paths {
     public const string SFX_PATH = "Sfx/";
     public const string CONFIG_PATH = "Config/";
+    public const string GFX_PATH = "Gfx/";
+    public const string OVERLAY_PATH = GFX_PATH + "Overlay/";
+    public const string NPC_PATH = GFX_PATH + "Npc/";
+    public const string BKGD_PATH = GFX_PATH + "Bkgd/";
 }
 
 [Serializable]

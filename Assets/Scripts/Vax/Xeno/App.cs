@@ -157,7 +157,7 @@ public class App : MonoBehaviour {
         mainCameraPosition = mainCamera.transform.position;
 
         overlay = new ViewLayer();
-        overlay.createGameObject( "blood", new Color( 1.0f, 0.0f, 0.0f, 0.0f ) );
+        overlay.createGameObject( Paths.OVERLAY_PATH + "blood", new Color( 1.0f, 0.0f, 0.0f, 0.0f ) );
         bkgd = new ViewLayer( "Bkgd", 0, ROOT_SCALE_FACTOR );
         bkgdOverlayFar = new ViewLayer( "Fog", -2, ROOT_SCALE_FACTOR * ( 1.0f + 1.0f * OVERLAY_UPSCALE_FACTOR ) );
         bkgdOverlayNear = new ViewLayer( "Fog", -1, ROOT_SCALE_FACTOR * ( 1.0f + 2.0f * OVERLAY_UPSCALE_FACTOR ) );
@@ -291,7 +291,7 @@ public class App : MonoBehaviour {
                     GameObject go = new GameObject();
                     SpriteRenderer sr = go.AddComponent<SpriteRenderer>();
 
-                    sr.sprite = Utils.loadResource<Sprite>( "splat" );
+                    sr.sprite = Utils.loadResource<Sprite>( Paths.GFX_PATH + "splat" );
 
                     float splatScaleFactor = Random.Range( 0.2f, 0.4f ) * getNpcScaleFactor();
                     Transform t = go.transform;

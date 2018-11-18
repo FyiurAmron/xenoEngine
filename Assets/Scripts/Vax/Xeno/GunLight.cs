@@ -3,8 +3,8 @@ namespace Vax.Xeno {
 using UnityEngine;
 
 public class GunLight {
-    public GameObject gameObject;
-    public Light light;
+    public readonly GameObject gameObject;
+    public readonly Light light;
     public float range;
 
     public bool enabled {

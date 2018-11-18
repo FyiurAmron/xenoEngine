@@ -38,20 +38,20 @@ public class BkgdSelector : MonoBehaviour {
 
         if ( sprites.TryGetValue( "1", out var bkgdOverlayNear ) ) {
             app.bkgdOverlayNear.createGameObject(
-                "Bkgd/" + bkgdOverlayNear,
+                Paths.BKGD_PATH + bkgdOverlayNear,
                 new Color( 1.0f, 1.0f, 1.0f, 1.0f )
             );
         }
 
         if ( sprites.TryGetValue( "2", out var bkgdOverlayFar ) ) {
             app.bkgdOverlayFar.createGameObject(
-                "Bkgd/" + bkgdOverlayFar,
+                Paths.BKGD_PATH + bkgdOverlayFar,
                 new Color( 1.0f, 1.0f, 1.0f, 1.0f )
             );
         }
 
         app.bkgd.createGameObject(
-            "Bkgd/" + sprites["3"]
+            Paths.BKGD_PATH + sprites["3"]
         );
         
 //        app.updateBkgdShadow();
